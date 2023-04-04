@@ -1,0 +1,35 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "docker compose up -d && docker attach widt-frontend",
+    "stop": "docker compose down",
+    "open:frontend": "docker attach widt-frontend",
+    "open:backend": "docker attach widt-backend",
+    "open:socket": "docker attach widt-socket",
+    "edit:frontend": "docker exec -it widt-frontend sh",
+    "edit:backend": "docker exec -it widt-backend sh",
+    "edit:socket": "docker exec -it widt-socket sh",
+    "dockerdev": "nuxt dev --port 2223",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "devDependencies": {
+    "@nuxt/content": "^2.5.2",
+    "nuxt": "^3.2.3"
+  },
+  "dependencies": {
+    "@modyfi/vite-plugin-yaml": "^1.0.4",
+    "@pinia/nuxt": "^0.4.7",
+    "@vueuse/core": "^9.13.0",
+    "less": "^4.1.3",
+    "lodash": "^4.17.21",
+    "minidenticons": "^2.0.2",
+    "qrcode": "^1.5.1",
+    "socket.io": "^4.6.1",
+    "socket.io-client": "^4.6.1",
+    "uuid": "^9.0.0",
+    "vite-plugin-markdown": "^2.1.0"
+  }
+}

@@ -1,0 +1,77 @@
+version: "3"
+services:
+  nginx:
+    image: nginx
+    container_name: widt-nginx
+    tty: true
+    ports:
+      - 80:80
+    volumes:
+      - ./dockerconfig/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    networks:
+      - traefik-public2
+  frontend:
+    image: node:19.1.0-alpine
+    container_name: widt-frontend
+    working_dir: /app
+    command: sh -c "yarn install && yarn run dockerdev"
+    ports:
+      - "2223:2223"
+      - "24678:24678"
+    volumes: 
+      - type: bind
+        source: "."
+        target: /app
+    networks:
+      - traefik-public2
+  redis:
+    image: redis:alpine
+    container_name: widt-redis
+    ports:
+      - '6379:6379'
+    expose:
+      - 6379
+    networks:
+      - traefik-public2
+  socket:
+    image: node:19.1.0-alpine
+    container_name: widt-socket
+    working_dir: /app
+    command: sh -c "yarn install && yarn run dev"
+    networks: 
+      - traefik-public2
+    ports:
+      - "2224:2224"
+    volumes: 
+      - type: bind
+        source: ./socketapi/
+        target: /app
+    environment: 
+       MYSQL_USER: ${MYSQL_USER}
+       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+  db:
+    image: mariadb
+    container_name: widt-mariadb
+    restart: on-failure
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: database
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    networks: 
+      - traefik-public2
+    volumes: 
+      - ./mariadb:/var/lib/mysql
+    ports:
+      - 2227:3306
+  adminer:
+    image: adminer
+    container_name: widt-adminer
+    restart: always
+    ports: 
+      - 2226:8080
+    networks:
+      - traefik-public2
+networks:
+ traefik-public2:
+    name: traefik-public2
