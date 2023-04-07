@@ -8,7 +8,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { useUserStore } from '@/stores/userstore'
+import { useUserStore } from "@/stores/userstore";
 const user = useUserStore();
 const status = ref("");
 watch(
@@ -24,13 +24,14 @@ onMounted(() => {
 <style lang="less" scoped>
 .user-config {
   padding: 0em;
-  border-bottom: 1px solid var(--fg);
   transition: all 0.15s;
 }
 .status {
   float: right;
   padding: 0.25em 0.5em;
   background: #e1de9b;
+  --fg: #222;
+  color: var(--fg);
   border-radius: 0.25em;
   text-transform: uppercase;
   font-size: 0.8rem;

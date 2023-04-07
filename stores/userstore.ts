@@ -30,7 +30,7 @@ export const useUserStore = defineStore('userStore', {
         this.generate()
       }
       // open socket
-      this.socket = io('192.168.1.11');
+      this.socket = io('localhost');
 
       // connection status
       this.socket.on('connect', function() { 
@@ -76,5 +76,5 @@ export const useUserStore = defineStore('userStore', {
 })
 
 if (import.meta.hot) {
-  import.meta.hot.accept(acceptHMRUpdate(useMainStore, import.meta.hot))
+  import.meta.hot.accept(acceptHMRUpdate(useUserStore, import.meta.hot))
 }

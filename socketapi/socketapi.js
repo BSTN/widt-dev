@@ -19,7 +19,7 @@ io.on('connection', (socket) => {
 
   socket.on('createGroup', (id) => {
     // create mysql
-
+    
     // create redis group
     pubClient.set(`group-${id}`)
     // join group

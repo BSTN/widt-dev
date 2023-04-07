@@ -1,3 +1,38 @@
+@import './ease.less';
+
+.overlaybg() {
+  animation: overlaybg 1s @easeOutExpo 0s 1 forwards;
+  opacity: 0;
+  @keyframes overlaybg {
+    100% {
+      opacity: 1;
+    }
+  }
+}
+
+.popup() {
+  animation: popup .3s @easeOutExpo 0s 1 forwards;
+  opacity: 0;
+  transform: scale(0.5);
+  @keyframes popup {
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+}
+
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.5s @easeInOutSine;
+}
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: translateX(-1em);
+}
+
+
 .fadein(@duration:0.5s, @plusdelay:0, @opacity: 1) {
   opacity: 0;
   animation: fadein @duration linear 0s 1 forwards;

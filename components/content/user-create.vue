@@ -6,13 +6,13 @@
         type="text"
         v-model="naam"
         maxlength="20"
-        placeholder="Voer hier je naam in"
+        placeholder="Verzin een naam"
       />
       <div v-if="naam.length > 20" class="max">
         Je naam kan maximaal 20 karakters bevatten.
       </div>
       <div>
-        <button @click="user.start(naam)">start</button>
+        <button @click="user.start(naam)" class="contrast">ok</button>
       </div>
       <!-- klik op de afbeelding om een ander icoontje te genereren. -->
     </div>
@@ -21,7 +21,6 @@
 <script lang="ts" setup>
 const user = useUserStore();
 const naam = ref("");
-
 </script>
 <style lang="less" scoped>
 .user-start {
@@ -43,12 +42,6 @@ const naam = ref("");
 input {
   background: var(--bg2);
   margin-bottom: 2em;
-}
-button {
-  background: var(--fg);
-  color: var(--bg);
-  border: 0;
-  margin: 0 auto;
 }
 .max {
   color: #f00;

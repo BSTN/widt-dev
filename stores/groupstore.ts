@@ -1,7 +1,8 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import { io } from "socket.io-client";
 import { GroupState } from '~/types/groupStore.d'
-import { v4 as uuidv4 } from "uuid";
+import { v4 as uuid } from "uuid";
+
 
 export const useGroupStore = defineStore('groupStore', {
   state: (): GroupState => ({
@@ -9,20 +10,36 @@ export const useGroupStore = defineStore('groupStore', {
     connected: false,
     groupid: undefined,
     socket: undefined,
+    users: []
   }),
   actions: {
-    init() {
+    async init() {
+      // composable injection
+      const { choose } = useNotify()
+      // start
       const self = this
+      // not on the server please...
       if (process.server) { return false }
       // load localstorage and check if group already exists
       const group = JSON.parse(localStorage.getItem('widt-group') || '{}')
+      // group is valid for one day?
       if (group && group.groupid && group.timestamp && group.timestamp > Date.now() - (24 * 60 * 60 * 1000)) {
-        this.groupid = group.groupid
+        const choice = await choose(
+          "Je bent op deze computer al eerder een groep begonnen. Wil je met deze groep doorgaan of een nieuwe groep starten?",
+          {
+            choices: ["nieuwe start", "doorgaan"],
+          }
+        );
+        if (typeof choice === "string" && choice === 'doorgaan') {
+          this.groupid = group.groupid
+        } else {
+          this.groupid = uuid();
+        }
       } else {
-        this.groupid = uuidv4();
+        this.groupid = uuid();
       }
       // open socket
-      this.socket = io('192.168.1.11');
+      this.socket = io('localhost');
 
       // connection status
       this.socket.on('connect', function() { 
@@ -42,7 +59,7 @@ export const useGroupStore = defineStore('groupStore', {
       
     },
     reset() {
-      this.groupid = uuidv4();
+      this.groupid = uuid();
       this.saveToLocalStorage()
     },
     test () {
@@ -59,5 +76,5 @@ export const useGroupStore = defineStore('groupStore', {
 })
 
 if (import.meta.hot) {
-  import.meta.hot.accept(acceptHMRUpdate(useMainStore, import.meta.hot))
+  import.meta.hot.accept(acceptHMRUpdate(useGroupStore, import.meta.hot))
 }

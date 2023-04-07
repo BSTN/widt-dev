@@ -1,17 +1,16 @@
 <template>
   <div class="creategroup">
-    <div class="centered">
-      <button>continue or start new</button>
+    <div v-if="!group.loading">
       <ClientOnly>
         <div class="imgcontainer">
           <img :src="qrcodeimg" v-if="qrcodeimg !== ''" /><br />
         </div>
         <div class="row">
-          <button class="copy">Kopiëer link</button><br /><br />
+          <button class="copy">Kopiëer</button>
+          <button @click="email()">Email</button><br /><br />
         </div>
-        <nuxt-link :to="url">open user in tab</nuxt-link>
+        <nuxt-link :to="url" target="_blank">open user in tab</nuxt-link>
       </ClientOnly>
-      <button @click="group.test()">test</button>
     </div>
   </div>
 </template>
@@ -19,6 +18,11 @@
 import QRCode from "qrcode";
 const qrcodeimg = ref("");
 const group = useGroupStore();
+const mailLink = computed(() => {
+  const subject = encodeURI("Doe mee met Wie is de trol?!");
+  const body = encodeURI(`Klik op deze link om mee te doen:\n\n${url.value}`);
+  return `mailto:?subject=${subject}&body=${body}`;
+});
 const url = computed(() => {
   const url = window.location.href.replace(
     "/start",
@@ -38,6 +42,7 @@ const url = computed(() => {
 .imgcontainer {
   background: #fff;
   border-radius: 100%;
+  border-radius: 1rem;
   width: 20rem;
   height: 20rem;
   margin: 0 auto 1rem;
@@ -52,5 +57,8 @@ img {
   height: calc(100% - @m);
   left: @m * 0.5;
   top: @m * 0.5;
+}
+button {
+  display: inline-block;
 }
 </style>

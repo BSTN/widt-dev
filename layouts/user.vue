@@ -2,6 +2,7 @@
   <div class="user">
     <userConfig></userConfig>
     <slot></slot>
+    <notifications></notifications>
   </div>
 </template>
 <script lang="ts" setup></script>

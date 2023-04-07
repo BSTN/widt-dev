@@ -16,20 +16,21 @@ watch(
     status.value = group.connected ? "connected" : "disconnected";
   }
 );
-onMounted(() => {
-  group.init();
+onMounted(async () => {
+  await group.init();
 });
 </script>
 <style lang="less" scoped>
 .group-config {
   padding: 0em;
-  border-bottom: 1px solid var(--fg);
   transition: all 0.15s;
 }
 .status {
   float: right;
   padding: 0.25em 0.5em;
   background: #e1de9b;
+  --fg: #222;
+  color: var(--fg);
   border-radius: 0.25em;
   text-transform: uppercase;
   font-size: 0.8rem;

@@ -6,8 +6,9 @@
 html, body {
   font-family: Helvetica, sans-serif;
   font-family: 'helvetica neue', Helvetica, sans-serif; 
-  font-family: 'Barlow', 'helvetica neue', Helvetica, sans-serif; 
-  font-size: 22px;
+  font-family: 'Barlow', 'helvetica neue', Helvetica, sans-serif;
+  font-weight: 500;
+  font-size: 20px;
   background: var(--bg);
   color:var(--fg);
 }
@@ -81,11 +82,22 @@ button {
   border: 1px solid var(--fg);
   border-radius: 0.25em;
   color:inherit;
-  padding: 0.25em .75em;
-  margin: 0 0.25em 0.25em 0;
+  padding: var(--buttonpadding);
+  margin: 0 0.25em 0.25em 0.25em;
+  font-weight: inherit;
   cursor: pointer;
   &:hover {
-    background: var(--bg2);
+    background: var(--fg);
+    color: var(--bg);
+  }
+}
+
+button.contrast {
+  background: var(--fg2);
+  color: var(--bg);
+  border:0;
+  &:hover {
+    background: var(--fg);
   }
 }
 
