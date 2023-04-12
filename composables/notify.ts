@@ -41,8 +41,7 @@ interface Choice {
 }
 interface Choices extends Array<Choice>{ }
 interface ChoiceOptions {
-  choices: Array<String>,
-  text: String
+  choices: Array<string>
 }
 
 export const useNotify = () => {

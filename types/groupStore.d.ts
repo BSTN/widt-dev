@@ -6,7 +6,7 @@ interface Answers {
 }
 
 interface userData {
-  id: String,
+  userid: String,
   name: String,
   answers: Array<Answers>
 }
@@ -20,9 +20,11 @@ export interface GroupState {
 }
 
 interface ServerToClientEvents {
-  hello: (a: String) => void;
+  joinRoom: (a: String) => void,
+  goto: (a: String) => void
 }
 
 interface ClientToServerEvents {
-  howdy: (a: String) => void;
+  joinRoom: ({groupid: String}) => void,
+  test: ({data: String}) => void
 }

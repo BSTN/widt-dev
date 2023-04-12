@@ -10,6 +10,7 @@
           <button @click="email()">Email</button><br /><br />
         </div>
         <nuxt-link :to="url" target="_blank">open user in tab</nuxt-link>
+        <br /><br />{{ group.groupid }}
       </ClientOnly>
     </div>
   </div>
@@ -37,7 +38,8 @@ const url = computed(() => {
 </script>
 <style lang="less" scoped>
 .creategroup {
-  text-align: center;
+  text-align: left;
+  font-size: 1rem;
 }
 .imgcontainer {
   background: #fff;
@@ -45,8 +47,7 @@ const url = computed(() => {
   border-radius: 1rem;
   width: 20rem;
   height: 20rem;
-  margin: 0 auto 1rem;
-  border: 2rem solid #fff;
+  margin: 0 0 1rem;
   overflow: hidden;
   position: relative;
 }

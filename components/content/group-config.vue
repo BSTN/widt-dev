@@ -1,10 +1,9 @@
 <template>
   <div class="group-config" :class="status">
     <div class="status">
-      {{ status }}
       <div class="loading" v-if="group.loading">loading...</div>
     </div>
-    <button class="reset" @click="group.reset()">reset</button>
+    <!-- <button class="reset" @click="group.reset()">reset</button> -->
   </div>
 </template>
 <script lang="ts" setup>

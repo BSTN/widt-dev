@@ -63,7 +63,7 @@
 const { messages, removeMessage, alerts, removeAlert, confirms, choices } =
   useNotify();
 </script>
-<style lang="less" scoped>
+<style lang="less">
 @import "~/less/animations.less";
 .alerts,
 .confirms,
@@ -79,6 +79,7 @@ const { messages, removeMessage, alerts, removeAlert, confirms, choices } =
     width: 100%;
     height: 100%;
     overflow: auto;
+    text-align: center;
     .bg {
       position: fixed;
       top: 0;
@@ -93,9 +94,11 @@ const { messages, removeMessage, alerts, removeAlert, confirms, choices } =
       margin: 10vh auto;
       background: var(--bg);
       border-radius: 0.5em;
-      padding: 2em 2em 1.5em;
+      padding: 2em 3em 1.5em;
+      width: auto;
+      display: inline-block;
       text-align: center;
-      width: 26em;
+      max-width: 26em;
       position: relative;
       z-index: 2;
       box-shadow: 0 0.5em 0.5em var(--bgoverlay);

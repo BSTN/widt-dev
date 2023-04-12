@@ -1,57 +1,63 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
-import { io } from "socket.io-client";
 import { GroupState } from '~/types/groupStore.d'
 import { v4 as uuid } from "uuid";
-
 
 export const useGroupStore = defineStore('groupStore', {
   state: (): GroupState => ({
     loading: true,
     connected: false,
     groupid: undefined,
-    socket: undefined,
     users: []
   }),
   actions: {
     async init() {
       // composable injection
       const { choose } = useNotify()
+      const router = useRouter()
       // start
       const self = this
       // not on the server please...
       if (process.server) { return false }
       // load localstorage and check if group already exists
       const group = JSON.parse(localStorage.getItem('widt-group') || '{}')
-      // group is valid for one day?
+      // TODO: group is valid for one day?
       if (group && group.groupid && group.timestamp && group.timestamp > Date.now() - (24 * 60 * 60 * 1000)) {
         const choice = await choose(
-          "Je bent op deze computer al eerder een groep begonnen. Wil je met deze groep doorgaan of een nieuwe groep starten?",
-          {
-            choices: ["nieuwe start", "doorgaan"],
-          }
+          "Je bent op deze computer al eerder een groep begonnen. Wil je met deze groep doorgaan of een nieuwe groep starten?", { choices: ["nieuwe start", "doorgaan"] }
         );
         if (typeof choice === "string" && choice === 'doorgaan') {
           this.groupid = group.groupid
         } else {
+          // start over
+          router.push("/start")
+          // create group id
           this.groupid = uuid();
         }
       } else {
+        // start over
+        router.push("/start")
+        // create group id
         this.groupid = uuid();
       }
-      // open socket
-      this.socket = io('localhost');
+
+      const Socket = useSocket()
 
       // connection status
-      this.socket.on('connect', function() { 
+      Socket.on('connect', function() { 
         self.connected = true 
-        if (self.socket) {
-          // joinRoom group
-          self.socket.emit('joinRoom', self.groupid)
-        }
+        // always join room on connect
+        Socket.emit('joinRoom', { groupid: self.groupid })
       });
-      this.socket.on('disconnect', function() { self.connected = false });
-
-      // this.socket.emit("howdy", "stranger");
+      Socket.on('goto', (url) => {
+        console.log('goto', url)
+      })
+      Socket.on('addUser', ({ userid, name }) => {
+        this.users.push({userid, name, answers: []})
+      })
+      Socket.on('groupUserData', (data) => {
+        this.users = data
+      })
+      Socket.on('disconnect', function() { self.connected = false });
       
       this.loading = false
 
@@ -63,9 +69,8 @@ export const useGroupStore = defineStore('groupStore', {
       this.saveToLocalStorage()
     },
     test () {
-      if (this.socket) {
-        this.socket.emit('test', {data: 'testdata'})
-      }
+      const Socket = useSocket()
+      Socket.emit('test', {data: 'testdata'})
     },
     saveToLocalStorage() {
       if (this.groupid) {

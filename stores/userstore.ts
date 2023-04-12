@@ -1,7 +1,6 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import { io } from "socket.io-client";
 import { UserState } from '~/types/userStore.d'
-import { v4 as uuidv4 } from "uuid";
 import { identicon } from "minidenticons";
 
 export const useUserStore = defineStore('userStore', {
@@ -10,67 +9,100 @@ export const useUserStore = defineStore('userStore', {
     connected: false,
     groupid: '',
     userid: '',
+    name: '',
     socket: undefined,
+    creating: false
   }),
   getters: {
-    icon(state):String {
+    icon(state): String {
       return state.userid ? identicon(state.userid, 50, 50) : '';
     }
   },
   actions: {
     init() {
       const self = this
+      const route = useRoute();
+      const router = useRouter();
       if (process.server) { return false }
       // load localstorage and check if group already exists
       const user = JSON.parse(localStorage.getItem('widt-user') || '{}')
       if (user && user.timestamp && user.timestamp > Date.now() - (24 * 60 * 60 * 1000)) {
         this.groupid = user.groupid
         this.userid = user.userid
-      } else {
-        this.generate()
+      }
+      // TODO:
+      if (user.groupid !== route.query.id) {
+        this.groupid = route.query.id || ''
+        this.userid = user.userid
+        this.saveToLocalStorage()
       }
       // open socket
-      this.socket = io('localhost');
+      const Socket = useSocket()
 
       // connection status
-      this.socket.on('connect', function() { 
-        if (self.groupid !== '' && self.socket) {
-          self.socket.emit('joinRoom', self.groupid)
+      Socket.on('connect', function () {
+        // join the room
+        if (self.groupid !== '' && self.userid !== '' && self.socket) {
+          self.socket.emit('joinRoom', {
+            groupid: self.groupid,
+            userid: self.userid
+          })
         }
-        self.connected = true 
+        self.connected = true
       });
-      this.socket.on('disconnect', function() { self.connected = false });
+      Socket.on('disconnect', function () { self.connected = false });
 
-      console.log('init...')
-      this.socket.emit("howdy", "stranger");
-
-      // create groupid
-      this.socket.on("hello", (arg) => {
-        console.log('hello', arg);
+      // message from socketmaster
+      Socket.on("goto", (url) => {
+        router.push(url)
       });
+
+      Socket.on('alert', (message) => {
+        const { alert } = useNotify()
+        alert(message)
+      })
+
+      Socket.on('userCreated', ({userid,name}) => {
+        self.creating = false
+        self.userid = userid
+        self.name = name
+        self.saveToLocalStorage()
+      })
       
       this.loading = false
 
       this.saveToLocalStorage()
       
     },
-    generate() {
-      this.userid = uuidv4();
+    tempIcon(id: String) {
+      return id ? identicon(id, 50, 50) : '';
+    },
+    setGroupid(id: String) {
+      this.groupid = id
+    },
+    test() {
+      const Socket = useSocket()
+      Socket.emit('test')
     },
     reset() {
-      this.groupid = uuidv4();
+      this.userid = '';
       this.saveToLocalStorage()
     },
     saveToLocalStorage() {
       if (this.groupid) {
-        localStorage.setItem('widt-user', JSON.stringify({groupid: this.groupid, userid: this.userid, timestamp: Date.now()}))
+        localStorage.setItem('widt-user', JSON.stringify({ groupid: this.groupid, userid: this.userid, timestamp: Date.now() }))
       }
     },
-    start(name:String) {
-      if (this.socket) {
-        this.socket.emit('howdy', name)
+    start({ name, userid }:{ name: String, userid: String }) {
+      const Socket = useSocket()
+      const self = this
+      if (!name || name.trim() === '') {
+        const { alert } = useNotify()
+        alert('Voer eerst een naam in.')
+      } else {
+        self.creating = true
+        Socket.emit('createUser', { userid, groupid: this.groupid, name })
       }
-      console.log(name)
     }
   }
 })

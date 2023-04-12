@@ -11,6 +11,7 @@
 import { useUserStore } from "@/stores/userstore";
 const user = useUserStore();
 const status = ref("");
+const route = useRoute()
 watch(
   () => user.connected,
   () => {
@@ -18,6 +19,7 @@ watch(
   }
 );
 onMounted(() => {
+  if (route.query.id) { user.setGroupid(route.query.id) }
   user.init();
 });
 </script>

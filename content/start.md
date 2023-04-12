@@ -4,14 +4,18 @@ next: /
 layout: group
 ---
 
-###### Instructie
+::splitScreen
+#left
+[Instructie]
 
 Doe mee door de camera van je telefoon op dit onderstaande plaatje te richten en klik vervolgens op de link op je scherm.
 
-###### Tip
+[Tip]
 
-Je kan de link vervolgens ook delen in een chatgroep.
+Je kan de link delen in bijvoorbeeld een (groep) chat.
 
+#right
 :groupCreate
+::
 
 :allUsers

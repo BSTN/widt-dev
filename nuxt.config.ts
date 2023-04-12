@@ -19,10 +19,16 @@ export default defineNuxtConfig({
   imports: {
     dirs: ['./stores']
   },
+  runtimeConfig: {
+    public: {
+      URL: process.env.URL,
+      BASE: process.env.BASE,
+    }
+  },
   vite: {
     plugins: [
       ViteYaml(),
       ViteMarkdown({mode: ['html']})
     ]
-  }
+  },
 })

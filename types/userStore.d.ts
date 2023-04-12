@@ -4,14 +4,17 @@ export interface UserState {
   loading: Boolean,
   groupid?: String,
   userid?: String,
+  name?: String,
   connected: Boolean,
-  socket?: Socket<ServerToClientEvents, ClientToServerEvents>
+  socket?: Socket<ServerToClientEvents, ClientToServerEvents>,
+  creating: Boolean
 }
 
 interface ServerToClientEvents {
-  hello: (a: String) => void;
+  goto: (a: string) => void
 }
 
 interface ClientToServerEvents {
-  joinGroup: (a: String) => void;
+  joinGroup: (a: string) => void;
+  joinRoom: ({groupid: string, userid: string}) => void;
 }

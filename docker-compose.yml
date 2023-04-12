@@ -11,13 +11,14 @@ services:
     networks:
       - traefik-public2
   frontend:
-    image: node:19.1.0-alpine
+    image: node:18.1.0-alpine
     container_name: widt-frontend
     working_dir: /app
     command: sh -c "yarn install && yarn run dockerdev"
     ports:
       - "2223:2223"
       - "24678:24678"
+      - "4000:4000"
     volumes: 
       - type: bind
         source: "."
@@ -34,7 +35,7 @@ services:
     networks:
       - traefik-public2
   socket:
-    image: node:19.1.0-alpine
+    image: node:18.1.0-alpine
     container_name: widt-socket
     working_dir: /app
     command: sh -c "yarn install && yarn run dev"
