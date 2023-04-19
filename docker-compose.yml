@@ -6,6 +6,8 @@ services:
     tty: true
     ports:
       - 80:80
+      - 24678:24678
+      - 4000:4000
     volumes:
       - ./dockerconfig/nginx.conf:/etc/nginx/conf.d/default.conf:ro
     networks:
@@ -15,10 +17,10 @@ services:
     container_name: widt-frontend
     working_dir: /app
     command: sh -c "yarn install && yarn run dockerdev"
-    ports:
-      - "2223:2223"
-      - "24678:24678"
-      - "4000:4000"
+    expose:
+      - 2223
+      - 24678
+      - 4000
     volumes: 
       - type: bind
         source: "."
@@ -41,8 +43,8 @@ services:
     command: sh -c "yarn install && yarn run dev"
     networks: 
       - traefik-public2
-    ports:
-      - "2224:2224"
+    expose:
+      - 2224
     volumes: 
       - type: bind
         source: ./socketapi/

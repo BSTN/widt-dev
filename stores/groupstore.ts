@@ -1,12 +1,14 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import { GroupState } from '~/types/groupStore.d'
 import { v4 as uuid } from "uuid";
+import order from '~/content/order.yml'
 
 export const useGroupStore = defineStore('groupStore', {
   state: (): GroupState => ({
     loading: true,
     connected: false,
     groupid: undefined,
+    position: 0,
     users: []
   }),
   actions: {
@@ -47,16 +49,27 @@ export const useGroupStore = defineStore('groupStore', {
         self.connected = true 
         // always join room on connect
         Socket.emit('joinRoom', { groupid: self.groupid })
+        // retrieve all user data
+        Socket.emit('getAllUserData', { groupid: self.groupid })
       });
+
+      // goto url
       Socket.on('goto', (url) => {
         console.log('goto', url)
+        console.log('order',order)
       })
+
+      // addUser
       Socket.on('addUser', ({ userid, name }) => {
+        // check if user exists
         this.users.push({userid, name, answers: []})
       })
+      // receive groupUserData
       Socket.on('groupUserData', (data) => {
         this.users = data
       })
+      
+      // do something?
       Socket.on('disconnect', function() { self.connected = false });
       
       this.loading = false
@@ -67,6 +80,10 @@ export const useGroupStore = defineStore('groupStore', {
     reset() {
       this.groupid = uuid();
       this.saveToLocalStorage()
+    },
+    next() {
+      const Socket = useSocket()
+      Socket.emit('next', { groupid: this.groupid})
     },
     test () {
       const Socket = useSocket()

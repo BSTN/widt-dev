@@ -1,6 +1,6 @@
 ---
-title: video
-description: video
+title: intro | Wie is de trol?
+description: introductie video
 layout: group-layout
 ---
 

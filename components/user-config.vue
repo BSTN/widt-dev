@@ -4,14 +4,16 @@
       {{ status }}
       <div class="loading" v-if="user.loading">loading...</div>
     </div>
-    <button class="reset" @click="user.reset()">reset</button>
+    <button class="reset" @click="user.reset()" v-if="user.userid !== ''">
+      reset
+    </button>
   </div>
 </template>
 <script lang="ts" setup>
 import { useUserStore } from "@/stores/userstore";
 const user = useUserStore();
 const status = ref("");
-const route = useRoute()
+const route = useRoute();
 watch(
   () => user.connected,
   () => {
@@ -19,7 +21,9 @@ watch(
   }
 );
 onMounted(() => {
-  if (route.query.id) { user.setGroupid(route.query.id) }
+  if (route.query.id) {
+    user.setGroupid(route.query.id);
+  }
   user.init();
 });
 </script>
@@ -54,8 +58,9 @@ button.reset {
   bottom: 0;
   right: 0;
   background: #f00;
+  color: var(--bg);
   padding: 0.25em 0.5em;
-  border: 1px solid var(--fg);
+  border: 0;
   margin: 1rem;
   text-transform: uppercase;
   font-size: 0.8rem;

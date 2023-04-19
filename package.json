@@ -24,6 +24,7 @@
     "@pinia/nuxt": "^0.4.7",
     "@types/uuid": "^9.0.1",
     "@vueuse/core": "^9.13.0",
+    "fantasy-name-generator": "^2.0.0",
     "less": "^4.1.3",
     "lodash": "^4.17.21",
     "minidenticons": "^2.0.2",

@@ -1,49 +1,51 @@
 <template>
-  <div class="user-start">
-    <div class="centered" v-if="user.userid">
-      <div class="icon" v-html="user.icon"></div>
-      <div>{{ user.name }}</div>
+  <div class="user-start" v-if="!user.loading">
+    <div class="centered" v-if="user.userid && user.userid !== ''">
       <div>
-        Als het goed is zie je nu je avatar verschijnen op het grote scherm.
+        <userAvatar :user="user.user" class="mainuser"></userAvatar>
+        <br /><br />
+        <div>Even wachten tot iedereen zover is...</div>
       </div>
     </div>
     <div class="centered" v-if="!user.userid">
-      <!-- <button @click="user.test">test</button> -->
-      {{ user.userid }}
-      <div class="icon" v-html="icon" @click="generate()"></div>
-      <input
-        type="text"
-        v-model="naam"
-        maxlength="20"
-        ref="nameinput"
-        placeholder="Verzin een naam"
-        @keydown.enter="user.start({ name: naam, userid })"
-      />
-      <div v-if="naam.length > 20" class="max">
-        Je naam kan maximaal 20 karakters bevatten.
+      <div class="avatar">
+        <div class="icon" v-html="icon" @click="generate()"></div>
+        <div class="naam">{{ naam }}</div>
       </div>
       <div>
-        <button @click="user.start({ name: naam, userid })" class="contrast">
+        <button
+          @click="user.createUser({ name: naam, userid })"
+          class="contrast"
+        >
           start
         </button>
       </div>
-      <!-- klik op de afbeelding om een ander icoontje te genereren. -->
     </div>
   </div>
 </template>
 <script lang="ts" setup>
 import { v4 as uuid } from "uuid";
+import { nameByRace } from "fantasy-name-generator";
 const user = useUserStore();
 const naam = ref("");
 const nameinput = ref(null);
 const userid = ref("");
 function generate() {
+  naam.value = nameByRace("elf", {
+    gender: Math.round(Math.random()) ? "male" : "female",
+  });
   userid.value = uuid();
 }
 const icon = computed(() => {
   return user.tempIcon(userid.value);
 });
-// TODO: check if user already exists!
+watch(
+  () => user.userid,
+  () => {
+    naam.value = "";
+    generate();
+  }
+);
 
 onMounted(() => {
   if (nameinput.value) {
@@ -59,20 +61,41 @@ onMounted(() => {
   width: 16rem;
   max-width: 100%;
   margin: 0 auto;
+  :deep(.mainuser.user-avatar .icon) {
+    animation: heartbeat 0.8s linear 0.5s infinite forwards;
+    // animation: rotate 2s linear 0.5s infinite forwards;
+    @keyframes heartbeat {
+      0% {
+        transform: scale(1);
+      }
+      40% {
+        transform: scale(1.05);
+      }
+      70% {
+        transform: scale(1);
+      }
+    }
+    @keyframes rotate {
+      0% {
+        transform: rotateZ(0deg);
+      }
+      100% {
+        transform: rotateZ(360deg);
+      }
+    }
+  }
 }
-.icon {
+
+.avatar {
   background: var(--bg2);
-  border-radius: 100%;
-  width: 8rem;
-  height: 8rem;
-  position: relative;
-  display: inline-block;
-  margin: 0 auto 2rem;
+  border-radius: 0.5em;
+  margin-bottom: 1em;
+  padding: 2em;
+  .naam {
+    font-size: 1.75em;
+  }
 }
-input {
-  background: var(--bg2);
-  margin-bottom: 2em;
-}
+
 .max {
   color: #f00;
 }

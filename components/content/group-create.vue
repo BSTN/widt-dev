@@ -6,11 +6,10 @@
           <img :src="qrcodeimg" v-if="qrcodeimg !== ''" /><br />
         </div>
         <div class="row">
-          <button class="copy">Kopiëer</button>
-          <button @click="email()">Email</button><br /><br />
+          <button @click="copy()" class="copy contrast">Kopiëer</button>
+          <button @click="email()" class="contrast">Email</button><br /><br />
         </div>
-        <nuxt-link :to="url" target="_blank">open user in tab</nuxt-link>
-        <br /><br />{{ group.groupid }}
+        <span style="display: none">{{ url }}</span>
       </ClientOnly>
     </div>
   </div>
@@ -19,11 +18,22 @@
 import QRCode from "qrcode";
 const qrcodeimg = ref("");
 const group = useGroupStore();
+const { message } = useNotify();
 const mailLink = computed(() => {
   const subject = encodeURI("Doe mee met Wie is de trol?!");
   const body = encodeURI(`Klik op deze link om mee te doen:\n\n${url.value}`);
   return `mailto:?subject=${subject}&body=${body}`;
 });
+function email() {
+  window.open(mailLink.value);
+}
+function copy() {
+  navigator.clipboard.writeText(url.value);
+  message(
+    `Link gekopieerd naar je clipboard, je kunt nu de link in een email of chat plakken.`
+  );
+  message(`${group.groupid}`);
+}
 const url = computed(() => {
   const url = window.location.href.replace(
     "/start",
@@ -42,7 +52,7 @@ const url = computed(() => {
   font-size: 1rem;
 }
 .imgcontainer {
-  background: #fff;
+  background: var(--fg);
   border-radius: 100%;
   border-radius: 1rem;
   width: 20rem;
@@ -58,6 +68,7 @@ img {
   height: calc(100% - @m);
   left: @m * 0.5;
   top: @m * 0.5;
+  mix-blend-mode: darken;
 }
 button {
   display: inline-block;

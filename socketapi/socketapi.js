@@ -33,12 +33,33 @@ io.on('connection', (socket) => {
 
     // join socket room
     socket.join(groupid)
+
+  })
+
+  socket.on('removeUser', async ({ groupid, userid }, callback) => {
     
-    // sync userdata
+    const done = await dataApi.removeUser({ groupid, userid }).catch(() => {
+      callback(false)
+    })
+
     const groupUserData = await dataApi.getGroupUserData(groupid)
-    console.log(groupUserData)
     io.to(groupid).emit('groupUserData', groupUserData)
 
+    callback(true)
+
+  })
+
+  socket.on('next', async ({ groupid }) => {
+    io.to(groupid).emit('goto', 'next')
+
+  })
+
+  socket.on('getAllUserData', async ({ groupid }) => {
+      // sync userdata
+    const groupUserData = await dataApi.getGroupUserData(groupid)
+    // send userdata to group
+    console.log('groupUserData', groupUserData)
+    io.emit('groupUserData', groupUserData)
   })
 
   socket.on('test', (data) => {
@@ -49,7 +70,7 @@ io.on('connection', (socket) => {
   Create User
   */
 
-  socket.on('createUser', async ({ userid, groupid, name }) => {
+  socket.on('createUser', async ({ userid, groupid, name }, cb) => {
     // TODO: check first if name exists
     // if (nameExists) {
     //   io.emit('alert', 'Deze naam bestaat al in deze groep.')
@@ -57,16 +78,19 @@ io.on('connection', (socket) => {
     // }
     // monitor
     l3('create user', { userid, groupid, name })
-    // get or create user
+    // (get or) create user
     const user = await dataApi.getUser({ userid, groupid, name })
     // add to group
     await dataApi.addToGroup({groupid, userid})
-    // callback
-    io.emit('userCreated', {userid, name})
     // joinroom
     socket.join(groupid)
     // update all
-    io.to(groupid).emit('addUser', {userid, name})
+    io.to(groupid).emit('addUser', { userid, name })
+    // send groupuserdata
+    const groupUserData = await dataApi.getGroupUserData(groupid)
+    io.to(groupid).emit('groupUserData', groupUserData)
+    // done
+    cb(true)
   })
 
   /*

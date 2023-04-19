@@ -14,6 +14,7 @@ interface userData {
 export interface GroupState {
   loading: Boolean,
   groupid?: String,
+  position: Number,
   connected: Boolean,
   socket?: Socket<ServerToClientEvents, ClientToServerEvents>
   users: Array<userData>

@@ -34,6 +34,20 @@ export async function getUser({ userid, groupid, name }) {
   return emptyUser
 }
 
+export async function removeUser({ groupid, userid }) {
+  
+  // remove from group
+  const group = await getGroup(groupid)
+  group.users = group.users.filter(x => {
+    return x !== userid
+  })
+
+  if (group) {
+    await writeGroup(group)
+  }
+
+}
+
 export async function getGroup(groupid) {
   /*
   get or create
@@ -60,7 +74,7 @@ export async function getGroup(groupid) {
   // create group if no redis && no mysql: 
   const emptyGroup = {
     groupid,
-    position: '/start',
+    position: 0,
     users: []
   }
   await writeGroup(emptyGroup)
@@ -71,7 +85,6 @@ export async function getGroupUserData(groupid) {
   const data = []
   const group = await getGroup(groupid)
   // l1('group data:')
-  // l2(group)
   for (let i in group.users) {
     const userid = group.users[i]
     const userdata = await getUser({ groupid, userid })
