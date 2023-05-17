@@ -12,6 +12,7 @@ interface userData {
 }
 
 export interface GroupState {
+  mounted: Boolean,
   loading: Boolean,
   groupid?: String,
   position: Number,

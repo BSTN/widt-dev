@@ -1,5 +1,8 @@
 <template>
   <div class="group-config" :class="status">
+    <button @click="group.prev()">PREV</button>
+    {{ group.position }}
+    <button @click="group.next()">NEXT</button>
     <div class="status">
       <div class="loading" v-if="group.loading">loading...</div>
     </div>
@@ -9,6 +12,9 @@
 <script lang="ts" setup>
 const group = useGroupStore();
 const status = ref("");
+onBeforeRouteLeave(() => {
+  alert("bye!");
+});
 watch(
   () => group.connected,
   () => {
@@ -16,13 +22,17 @@ watch(
   }
 );
 onMounted(async () => {
-  await group.init();
+  if (!group.mounted) {
+    await group.init();
+  }
 });
 </script>
 <style lang="less" scoped>
 .group-config {
   padding: 0em;
   transition: all 0.15s;
+  position: relative;
+  z-index: 99;
 }
 .status {
   float: right;

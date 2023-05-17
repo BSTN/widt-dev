@@ -1,5 +1,22 @@
-order:
-  - start, test/index
-  - intro, test/pause
-  - intro-q1, test/pause
-  - intro-q1, test/q1
+- name: Start
+  group: group-start
+  user: user-start
+- name: Introductie
+  group: video-player
+  file: 'videos/test.mp4'
+  user: user-pause
+- name: Introductie 1.
+  group: group-intro-1
+  user: user-pause
+- name: "1. Goed en Kwaad"
+  group: group-chapter-1
+  user: user-chapter-1
+- name: "1. Goed en Kwaad resultaten"
+  group: group-chapter-1
+  user: user-chapter-1-results
+- name: "Introductie 2."
+  group: group-intro-2
+  user: user-pause
+- name: "2. Trollen vangen"
+  group: group-chapter-2
+  user: user-chapter-2

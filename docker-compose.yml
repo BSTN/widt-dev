@@ -44,6 +44,7 @@ services:
     networks: 
       - traefik-public2
     expose:
+      - 80
       - 2224
     volumes: 
       - type: bind

@@ -131,3 +131,11 @@ export async function writeGroup(group, service) {
     // await sql.create(emptyGroup)
   }
 }
+
+export async function writeAnswer({ groupid, userid, chapter, k, answer, name }, service) {
+  // redis
+  if (!service || service === 'redis') {
+    const user = await getUser({ userid, groupid, name })
+    // await redisPubClient.set(`user-${user.userid}`, JSON.stringify(user))
+  }
+}

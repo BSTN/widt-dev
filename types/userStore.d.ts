@@ -6,7 +6,14 @@ interface userData {
   answers: Array<Answers>
 }
 
+interface answer {
+  chapter: String,
+  k: Number,
+  answer: any[]
+}
+
 export interface UserState {
+  mounted: Boolean,
   loading: Boolean,
   groupid?: String,
   userid: String,
@@ -16,6 +23,7 @@ export interface UserState {
   socket?: Socket<ServerToClientEvents, ClientToServerEvents>,
   creating: Boolean,
   users: Array<userData>
+  answers: Array<answer>
 }
 
 interface ServerToClientEvents {

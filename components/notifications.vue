@@ -54,7 +54,7 @@
         @click="removeMessage(m.id)"
         :key="'message' + m.id"
       >
-        {{ m.text }}
+        <div v-html="m.text"></div>
       </div>
     </TransitionGroup>
   </div>
@@ -127,6 +127,7 @@ const { messages, removeMessage, alerts, removeAlert, confirms, choices } =
   padding: 1em;
   font-size: 0.8rem;
   overflow: auto;
+  text-align: left;
   .message {
     border: 1px solid #00f;
     border-radius: 0.5em;
@@ -135,6 +136,7 @@ const { messages, removeMessage, alerts, removeAlert, confirms, choices } =
     color: var(--messagefg);
     border: 1px solid var(--messagefg);
     margin-bottom: 0.25em;
+    line-height: 1.4em;
     &.error {
       border-color: var(--errorfg);
       color: var(--errorfg);

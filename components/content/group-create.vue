@@ -1,14 +1,14 @@
 <template>
-  <div class="creategroup">
+  <div class="group-create">
     <div v-if="!group.loading">
       <ClientOnly>
-        <div class="imgcontainer">
+        <div class="imgcontainer" @click="copy()">
           <img :src="qrcodeimg" v-if="qrcodeimg !== ''" /><br />
         </div>
-        <div class="row">
+        <!-- <div class="row">
           <button @click="copy()" class="copy contrast">Kopiëer</button>
           <button @click="email()" class="contrast">Email</button><br /><br />
-        </div>
+        </div> -->
         <span style="display: none">{{ url }}</span>
       </ClientOnly>
     </div>
@@ -28,15 +28,16 @@ function email() {
   window.open(mailLink.value);
 }
 function copy() {
-  navigator.clipboard.writeText(url.value);
   message(
-    `Link gekopieerd naar je clipboard, je kunt nu de link in een email of chat plakken.`
+    `Link gekopieerd naar je clipboard, je kunt nu de link in een email of chat plakken om deelnemers uit te nodigen.<Br><br> ${url.value}`,
+    { duration: 6000 }
   );
-  message(`${group.groupid}`);
+  // message(`${group.groupid}`);
+  navigator.clipboard.writeText(url.value);
 }
 const url = computed(() => {
   const url = window.location.href.replace(
-    "/start",
+    "/group",
     "/test?id=" + group.groupid
   );
   QRCode.toDataURL(url, function (err, code) {
@@ -47,8 +48,8 @@ const url = computed(() => {
 });
 </script>
 <style lang="less" scoped>
-.creategroup {
-  text-align: left;
+.group-create {
+  text-align: center;
   font-size: 1rem;
 }
 .imgcontainer {
@@ -57,7 +58,7 @@ const url = computed(() => {
   border-radius: 1rem;
   width: 20rem;
   height: 20rem;
-  margin: 0 0 1rem;
+  margin: 0 auto 1rem;
   overflow: hidden;
   position: relative;
 }

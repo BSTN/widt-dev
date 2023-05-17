@@ -1,7 +1,10 @@
 import { io, redisPubClient, redisSubClient } from './redisconnection.js'
 import * as dataApi from './dataapi.js'
 import { createAdapter } from "@socket.io/redis-adapter";
-import {l1, l2, l3, l4, log} from './log.js'
+import { l1, l2, l3, l4, log } from './log.js'
+import express from 'express'
+
+const app = express()
 
 // launch socket server
 
@@ -24,12 +27,14 @@ io.on('connection', (socket) => {
     // connect redis
     
     // get group or create
-    await dataApi.getGroup(groupid)
+    const group = await dataApi.getGroup(groupid)
     
     // make sure user is added to group
     if (userid) {
       await dataApi.addToGroup({ groupid, userid })
     }
+
+    socket.emit('goto', group.position)
 
     // join socket room
     socket.join(groupid)
@@ -46,11 +51,6 @@ io.on('connection', (socket) => {
     io.to(groupid).emit('groupUserData', groupUserData)
 
     callback(true)
-
-  })
-
-  socket.on('next', async ({ groupid }) => {
-    io.to(groupid).emit('goto', 'next')
 
   })
 
@@ -93,17 +93,54 @@ io.on('connection', (socket) => {
     cb(true)
   })
 
+  socket.on('prev', async ({ groupid }) => {
+
+    const group = await dataApi.getGroup(groupid)
+
+    group.position = group.position === 0 ? 0 : parseInt(group.position) - 1
+
+    await dataApi.writeGroup(group)
+
+    io.to(groupid).emit('goto', group.position)
+
+  })
+
+   socket.on('next', async ({ groupid }) => {
+
+    const group = await dataApi.getGroup(groupid)
+
+    group.position = parseInt(group.position) + 1
+
+    await dataApi.writeGroup(group)
+
+    io.to(groupid).emit('goto', group.position)
+
+  })
+
   /*
   Submit Answer
   */
 
-  socket.on('submitAnswer', ({key, value}) => {
-    // write to mysql
+  socket.on('setAnswer',  async ({groupid, userid, chapter, k, answer, name}) => {
 
     // update redit user-{userid}
+    await dataApi.writeAnswer({groupid, userid, chapter, k, answer, name})
 
     // send to group
+    io.to(groupid).emit('updateAnswer', {userid, chapter, k, answer})
 
   })
 
 })
+
+app.get('/', async (req, res) => {
+  const groupKeys = await redisPubClient.keys("group-*")
+  const groups = []
+  for (let i in groupKeys) { groups.push(JSON.parse(await redisPubClient.get(groupKeys[i]))) }
+  const userKeys = await redisPubClient.keys("user-*")
+  const users = []
+  for (let i in userKeys) { users.push(JSON.parse(await redisPubClient.get(userKeys[i]))) }
+  res.send({groups, users})
+})
+
+app.listen(80)

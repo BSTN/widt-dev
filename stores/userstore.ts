@@ -15,6 +15,7 @@ function asyncEmit(func: string, data?:Object) {
 
 export const useUserStore = defineStore('userStore', {
   state: (): UserState => ({
+    mounted: false,
     loading: true,
     connected: false,
     groupid: '',
@@ -23,7 +24,8 @@ export const useUserStore = defineStore('userStore', {
     position: 0,
     socket: undefined,
     creating: false,
-    users: []
+    users: [],
+    answers: []
   }),
   getters: {
     icon(state): String {
@@ -34,25 +36,45 @@ export const useUserStore = defineStore('userStore', {
         userid: state.userid,
         name: state.name,
       }
+    },
+    getAnswer(state) {
+      return ({ chapter, k }) => {
+        const found = state.answers.find(x => x.chapter === chapter && x.k === k)
+        if (found === undefined) { return null }
+        return found.answer
+      }
+    },
+    getChapterPosition(state) {
+      return (chapter: String) => {
+        const index = state.answers.findLastIndex(x => x.chapter === chapter) 
+        if (index === -1) return 0
+        return index + 1
+      }
     }
   },
   actions: {
     init() {
+      this.mounted = true
       const self = this
       const route = useRoute();
       const router = useRouter();
       if (process.server) { return false }
       // load localstorage and check if group already exists
       const user = JSON.parse(localStorage.getItem('widt-user') || '{}')
-      if (user && user.timestamp && user.timestamp > Date.now() - (24 * 60 * 60 * 1000)) {
+      // if (user && user.timestamp && user.timestamp > Date.now() - (24 * 60 * 60 * 1000)) {
+      if (user) {
         this.groupid = user.groupid
         this.userid = user.userid
         this.name = user.name
+        this.answers = user.answers
       }
       // TODO:
       if (route.query.id && user.groupid !== route.query.id) {
         this.groupid = route.query.id || ''
         this.userid = ''
+        this.name = ''
+        this.answers = []
+        this.position = 0
         this.saveToLocalStorage()
       }
       // open socket
@@ -83,10 +105,10 @@ export const useUserStore = defineStore('userStore', {
       })
 
       // message from socketmaster
-      Socket.on("goto", (url) => {
-        console.log('goto', url)
-        console.log(order.order)
-        // router.push(url)
+      Socket.on("goto", (position) => {
+        console.log('goto', position, order[position].user)
+        self.position = position
+        // navigateTo(order[position].user)
       });
 
       Socket.on('alert', (message) => {
@@ -116,17 +138,36 @@ export const useUserStore = defineStore('userStore', {
       const Socket = useSocket()
       Socket.emit('test')
     },
-    async reset() {
+    async setAnswer({ chapter, k, answer }) {
+      const key = this.answers.findIndex(x => x.chapter === chapter && x.k === k)
+      if (key === -1) {
+        this.answers.push({chapter, k, answer})
+      } else {
+        this.answers[key] = { chapter, k, answer }
+      }
+      this.saveToLocalStorage()
       const Socket = useSocket()
-      const done = await asyncEmit('removeUser', { groupid: this.groupid, userid: this.userid })
-      if (done) {
-        this.userid = '';
-        this.saveToLocalStorage()
+      await Socket.emit('setAnswer', {groupid: this.groupid, userid: this.userid, chapter, k, answer, name: this.name})
+    },
+    async reset() {
+      // sure ?
+
+      const { confirm } = useNotify()
+      const sure = await confirm('Weet je zeker dat je het spel wilt verlaten?')
+      if (sure) {
+        const Socket = useSocket()
+        const done = await asyncEmit('removeUser', { groupid: this.groupid, userid: this.userid })
+        if (done) {
+          this.userid = '';
+          this.name = '';
+          this.answers = [];
+          this.saveToLocalStorage()
+        }
       }
     },
     saveToLocalStorage() {
       if (this.groupid) {
-        localStorage.setItem('widt-user', JSON.stringify({ groupid: this.groupid, userid: this.userid, name: this.name, timestamp: Date.now() }))
+        localStorage.setItem('widt-user', JSON.stringify({ groupid: this.groupid, userid: this.userid, name: this.name, answers: this.answers, timestamp: Date.now() }))
       }
     },
     async createUser({ name, userid }:{ name: String, userid: String }) {

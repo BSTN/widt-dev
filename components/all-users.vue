@@ -1,7 +1,9 @@
 <template>
   <div class="all-users" :class="'type-' + type">
     <div v-if="users">
-      <label>{{ users.length }} deelnemers</label>
+      <label
+        >{{ users.length }} deelnemer{{ users.length > 1 ? "s" : "" }}</label
+      >
       <userAvatar v-for="user in users" :user="user" />
     </div>
   </div>
@@ -68,8 +70,11 @@ onMounted(() => {
         margin: 0 auto;
       }
       .name {
-        display: none;
+        padding: 1em 0;
       }
+      // .name {
+      //   display: none;
+      // }
     }
   }
 }

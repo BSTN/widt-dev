@@ -9,10 +9,12 @@ export const useGroupStore = defineStore('groupStore', {
     connected: false,
     groupid: undefined,
     position: 0,
-    users: []
+    users: [],
+    mounted: false
   }),
   actions: {
     async init() {
+      this.mounted = true
       // composable injection
       const { choose } = useNotify()
       const router = useRouter()
@@ -31,13 +33,13 @@ export const useGroupStore = defineStore('groupStore', {
           this.groupid = group.groupid
         } else {
           // start over
-          router.push("/start")
+          router.push("/group")
           // create group id
           this.groupid = uuid();
         }
       } else {
         // start over
-        router.push("/start")
+        router.push("/group")
         // create group id
         this.groupid = uuid();
       }
@@ -54,9 +56,8 @@ export const useGroupStore = defineStore('groupStore', {
       });
 
       // goto url
-      Socket.on('goto', (url) => {
-        console.log('goto', url)
-        console.log('order',order)
+      Socket.on('goto', (position) => {
+        self.position = position
       })
 
       // addUser
@@ -80,6 +81,10 @@ export const useGroupStore = defineStore('groupStore', {
     reset() {
       this.groupid = uuid();
       this.saveToLocalStorage()
+    },
+    prev() {
+      const Socket = useSocket()
+      Socket.emit('prev', { groupid: this.groupid})
     },
     next() {
       const Socket = useSocket()

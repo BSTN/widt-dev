@@ -1,21 +1,28 @@
 <template>
   <div class="video">
-    <video autoplay noloop @click="toggleMute()" ref="video">
+    <video noloop @click="toggleMute()" ref="video">
       <source :src="file" type="video/mp4" />
     </video>
     <div class="control" :class="{ show: showController }" @mouseenter="enter">
-      <button @click="startPlay()" class="contrast"><icon icon="rewind"></icon></button>
-      <button @click="togglePlay()" class="contrast"><icon :icon="playing ? 'pause' : 'play'"></icon></button>
-      <button @click="toggleMute()" class="contrast"><icon :icon="muted ? 'muted' : 'unmuted'"></icon></button>
+      <button @click="startPlay()" class="contrast">
+        <icon icon="rewind"></icon>
+      </button>
+      <button @click="togglePlay()" class="contrast">
+        <icon :icon="playing ? 'pause' : 'play'"></icon>
+      </button>
+      <button @click="toggleMute()" class="contrast">
+        <icon :icon="muted ? 'muted' : 'unmuted'"></icon>
+      </button>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
+const group = useGroupStore();
 const { file } = defineProps({
-  file: { type: String, default: () => "video/test.mp4" },
+  file: { type: String, default: () => "videos/test.mp4" },
 });
 const video = ref(null);
-const playing = ref(true);
+const playing = ref(false);
 const muted = ref(true);
 const showController = ref(true);
 function toggleMute() {
