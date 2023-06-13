@@ -5,13 +5,20 @@
       <textarea v-model="input"></textarea>
     </div>
     <div class="buttons">
-      <button>klaar</button>
+      <button @click="send()">klaar</button>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
 const user = useUserStore();
 const input = ref("");
+async function send() {
+  const data = await $fetch("/socketapi/beatthebot", {
+    method: "POST",
+    body: { text: input.value, userid: user.userid, groupid: user.groupid },
+  });
+  console.log(data);
+}
 </script>
 <style lang="less" scoped>
 .user-chapter-5 {

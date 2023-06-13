@@ -3,8 +3,14 @@ import * as dataApi from './dataapi.js'
 import { createAdapter } from "@socket.io/redis-adapter";
 import { l1, l2, l3, l4, log } from './log.js'
 import express from 'express'
+import fetch from 'node-fetch';
+import 'dotenv/config'
 
 const app = express()
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json())
+
 
 // launch socket server
 
@@ -169,6 +175,32 @@ app.get('/', async (req, res) => {
   const users = []
   for (let i in userKeys) { users.push(JSON.parse(await redisPubClient.get(userKeys[i]))) }
   res.send({groups, users})
+})
+
+app.post('/beatthebot', async (req, res) => {
+
+  if (!req.body || !req.body.text) {
+    res.send('No input.')
+    return false
+  }
+
+  const URL = process.env.BOTAPI
+
+  let headers = {}
+  if (process.env.BOTAPIKEY) {
+    headers = { 'Authorization': 'Bearer ' + process.env.BOTAPIKEY };
+  }
+  fetch(URL, { headers, method: "POST", body: req.body.text })
+      .then(response => response.json())
+      .then(data => {
+        let score = -1
+        if (data[0] && data[0][0] && data[0][0]['label'] === 'LABEL_1') {
+          score = data[0][0]['score']
+        } else {
+          score = data[0][1]['score']
+        }
+        res.send({ score: score })
+      });
 })
 
 app.listen(80)

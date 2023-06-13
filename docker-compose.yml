@@ -40,6 +40,7 @@ services:
     # deploy:
     #   mode: replicated
     #   replicas: 3
+    container_name: widt-socket
     image: node:18.1.0-alpine
     working_dir: /app
     command: sh -c "yarn install && yarn run dev"
