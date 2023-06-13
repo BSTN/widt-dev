@@ -93,7 +93,9 @@ io.on('connection', (socket) => {
     cb(true)
   })
 
-  socket.on('prev', async ({ groupid }) => {
+  socket.on('prev', async ({ groupid }, cb) => {
+
+    l1('prev')
 
     const group = await dataApi.getGroup(groupid)
 
@@ -103,9 +105,13 @@ io.on('connection', (socket) => {
 
     io.to(groupid).emit('goto', group.position)
 
+    if (cb) { cb() }
+
   })
 
-   socket.on('next', async ({ groupid }) => {
+  socket.on('next', async ({ groupid }, cb) => {
+     
+    l1('next')
 
     const group = await dataApi.getGroup(groupid)
 
@@ -113,7 +119,9 @@ io.on('connection', (socket) => {
 
     await dataApi.writeGroup(group)
 
-    io.to(groupid).emit('goto', group.position)
+     io.to(groupid).emit('goto', group.position)
+
+     if (cb) { cb() }
 
   })
 
@@ -131,7 +139,27 @@ io.on('connection', (socket) => {
 
   })
 
+  /*
+  toggle finished state of chapter
+  */
+
+  socket.on('finish', async ({ groupid, userid, name }) => {
+    console.log('finish', userid)
+    // write finished state
+    // await dataApi.setFinished({ groupid, userid, name })
+    // update state to group
+    io.to(groupid).emit('setFinished', {userid, name, groupid})
+  })
+  socket.on('unFinish', async ({ groupid, userid, name }) => {
+    console.log('unFinish', userid)
+    // write finished state
+    // await dataApi.setFinished({ groupid, userid, name })
+    // update state to group
+    io.to(groupid).emit('setUnFinished', {userid, name, groupid})
+  })
 })
+
+
 
 app.get('/', async (req, res) => {
   const groupKeys = await redisPubClient.keys("group-*")

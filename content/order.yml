@@ -15,8 +15,17 @@
   group: group-chapter-1
   user: user-chapter-1-results
 - name: "Introductie 2."
-  group: group-intro-2
+  group: group-intro-1
   user: user-pause
 - name: "2. Trollen vangen"
   group: group-chapter-2
   user: user-chapter-2
+- name: "3. Labels"
+  group: group-chapter-3
+  user: user-chapter-3
+- name: "4. Pin"
+  group: group-chapter-4
+  user: user-chapter-4
+- name: "5. Beat-the-bot!"
+  group: group-chapter-5
+  user: user-chapter-5

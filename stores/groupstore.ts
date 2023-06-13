@@ -10,7 +10,8 @@ export const useGroupStore = defineStore('groupStore', {
     groupid: undefined,
     position: 0,
     users: [],
-    mounted: false
+    mounted: false,
+    finished: {}
   }),
   actions: {
     async init() {
@@ -54,7 +55,25 @@ export const useGroupStore = defineStore('groupStore', {
         // retrieve all user data
         Socket.emit('getAllUserData', { groupid: self.groupid })
       });
-
+      // notifications:
+      Socket.on('error', function () {
+        console.warn('ERROR!')
+      })
+      Socket.on('ping', function () {
+        console.warn('ping!')
+      })
+      Socket.on('reconnect', function () {
+        console.warn('reconnect!')
+      })
+      Socket.on('reconnect_attempt', function () {
+        console.warn('reconnect_attempt!')
+      })
+      Socket.on('reconnect_error', function () {
+        console.warn('reconnect_error!')
+      })
+      Socket.on('reconnect_failed', function () {
+        console.warn('reconnect failed!')
+      })
       // goto url
       Socket.on('goto', (position) => {
         self.position = position
@@ -68,6 +87,16 @@ export const useGroupStore = defineStore('groupStore', {
       // receive groupUserData
       Socket.on('groupUserData', (data) => {
         this.users = data
+      })
+
+      Socket.on('setFinished', ({ userid, name, groupid }) => {
+        if (!(name in self.finished)) { self.finished[name] = [userid] }
+        if (!self.finished[name].includes(userid)) { self.finished[name].push(userid) }
+      })
+
+      Socket.on('setUnFinished', ({ userid, name, groupid }) => {
+        if (!(name in self.finished)) { self.finished[name] = [] }
+        if (self.finished[name].includes(userid)) { self.finished[name].splice(self.finished[name].indexOf(userid), 1) }
       })
       
       // do something?
@@ -88,7 +117,9 @@ export const useGroupStore = defineStore('groupStore', {
     },
     next() {
       const Socket = useSocket()
-      Socket.emit('next', { groupid: this.groupid})
+      Socket.emit('next', { groupid: this.groupid }, () => {
+        console.log('callback!')
+      })
     },
     test () {
       const Socket = useSocket()

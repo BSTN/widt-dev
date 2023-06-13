@@ -18,7 +18,8 @@ export interface GroupState {
   position: Number,
   connected: Boolean,
   socket?: Socket<ServerToClientEvents, ClientToServerEvents>
-  users: Array<userData>
+  users: Array<userData>,
+  finished: { [key: string]: Array<String> }
 }
 
 interface ServerToClientEvents {

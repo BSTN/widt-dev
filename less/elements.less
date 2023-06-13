@@ -1,7 +1,7 @@
-@import './reset.less';
-@import './transitions.less';
-@import './typography.less';
-@import './themes.less';
+@import '@/less/reset.less';
+@import '@/less/transitions.less';
+@import '@/less/typography.less';
+@import '@/less/themes.less';
 
 html, body {
   font-family: Helvetica, sans-serif;
@@ -160,4 +160,32 @@ label {
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+.question {
+  text-align: center;
+  padding: 7rem 2rem;
+}
+
+.commentbox {
+  background: var(--fg);
+  color: var(--bg);
+  position: relative;
+  padding: 0.7em 1em;
+  margin-bottom: 1em;
+  // font-family: 'JetBrains Mono';
+  font-size: 0.8rem;
+  letter-spacing: 0;
+  line-height: 1.4em;
+  border-radius: 0 0.5em 0.5em 0.5em;
+  &:before {
+    content: "";
+    position: absolute;
+    left: -0.5rem;
+    top: 0rem;
+    width: 0.5rem;
+    height: 0.5rem;
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 0%);
+    background: var(--fg);
+  }
 }

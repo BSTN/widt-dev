@@ -134,7 +134,7 @@ export async function writeGroup(group, service) {
 
 export async function writeAnswer({ groupid, userid, chapter, k, answer, name }, service) {
   // redis
-  if (!service || service === 'redis') {
+  if (!service || service === 'redis') { 
     const user = await getUser({ userid, groupid, name })
     // await redisPubClient.set(`user-${user.userid}`, JSON.stringify(user))
   }

@@ -32,4 +32,60 @@ chapter2:
       - "Zie hier de tragedie van de nieuwe tijd: De werkelijkheid, onderzocht en op papier gezet door wetenschappers, gebaseerd op honderden jaren natuurwetenschappelijke kennis, wordt door een niemand zonder papieren op een forum zonder enige onderbouwing verworpen. De menselijke invloed op klimaatverandering is dusdanig bewezen, dat er maar een kans van 1/3.500.000 bestaat dat de huidige opwarming niet door de mens komt."
       - "De enige manier waarop we, in ons huidige systeem, ooit minder zullen gaan uitstoten, is als men dáár goed geld mee verdienen kan. Zonder verdienmodel is het alleen politiek gezwets. Onze maatschappij draait om geld, als milieu geld kóst blijven we het op de tweede plaats zetten."
       - "Er moeten regels komen die een maximaal aantal vliegkometers per persoon stellen per jaar. Ook een maximale vleesafname per persoon per jaar. Vrijwillig gaat niemand zijn levensstandaard verlagen"
-
+chapter3-labels:
+  - Nieuwsgierig
+  - Persoonlijk
+  - Grappig 
+  - Oplossingsgericht
+  - Boos
+  - Misleidend
+chapter3:
+  - text: Het zou interessant zijn om een artikel te lezen over wat hier nu concreet de gevolgen van zijn? Los van dat we natuurlijk extremer weer zien. Wat heeft dit voor een impact op de bewoners van Nederland? Wanneer gaan we hier écht 'rampzalige' gevolgen van voelen?
+    label: nieuwsgierig
+  - text: Ja, we weten het nu wel. Record dit,record dat, als het maar in het straatje past van de klimatologen die opwarming van de aarde verheerlijken. En eerlijk is eerlijk, het wordt ook warmer. Maar houdt eens op met dat vergelijken. Er zijn echt wel meer hete zomers geweest.
+    label: boos
+  - text: De enige manier waarop we, in ons huidige systeem, ooit minder zullen gaan uitstoten, is als men dáár goed geld mee verdienen kan. Zonder verdienmodel is het alleen politiek gezwets. Onze maatschappij draait om geld, als milieu geld kóst blijven we het op de tweede plaats zetten.
+    label: oplossingsgericht
+  - text: Ik denk dat er ondertussen genoeg gepraat en onderwezen is door wetenschappers. Het is duidelijk, wij zijn de oorzaak van de opwarming. Maar helaas is de toekomst van deze planeet en onze gezondheid in handen van politici die geen grote stappen willen maken. Ja het kost allemaal geld. Onzin.
+    label: boos
+  - text: En zo kan ik als jongvolwassen, redelijk machteloos, toekijken hoe de wereld langzaamaan vergaat. Hopelijk kan het nog worden omgedraaid. Ik mag na gaan denken of ik uberhaupt nog kinderen kan nemen, als ik dat graag wil.
+    label: persoonlijk
+  - text: Er moeten regels komen die een maximaal aantal vliegkometers per persoon stellen per jaar. Ook een maximale vleesafname per persoon per jaar. Vrijwillig gaat niemand zijn levensstandaard verlagen
+    label: oplossingsgericht
+  - text: Climate change waaaaa!!! Allemaal even bang worden
+    label: grappig
+  - text: Lekker man. Als je gelukt hebt, dobber jij later lekker op een luchtbedje boven je eigen huis van het weer te genieten ;)
+    label: grappig
+  - text: Ooit GEMETEN. En sinds wanneer wordt er gemeten? Precies, niet sinds heel lang. Dus hoe het daarvoor was is niet precies bekend.
+    label: misleidend
+  - text: Gelukkig voor al die klimaatgekkies leven wij niet in de oertijd want toen was het nog een stukje warmer op veel plaatsen, en dat zonder inmenging van de mens hoe vreemd.
+    label: misleidend
+  - text: Ik sta versteld van de kennis die hier gedeeld wordt en wijsheid hoe alles opgelost kan worden. Maar ik heb toch een paar vragen. Als iedereen een windmolen in zijn tuin heeft, dan nog kan er niet genoeg energie opgewekt worden voor onze behoefte. Zelfs niet met zonnepanelen. Stel dat iedereen dan ook een elektrische auto heeft, of zelfs 2, die allemaal opgeladen moeten worden, dus iedereen heeft 1 of twee oplaadpunten bij zijn huis, hoe worden die dan geladen? Waarschijnlijk zullen dan overal heel dikke kabels in de grond moeten. Dan hebben we ook allemaal een inductie kookplaat en warmtepomp. Dan zullen we allemaal 4 windmolens in onze tuin moeten hebben. Wat ik wil zeggen is dit; moeten bij al die wetenschappers niet een paar vakmensen uit de praktijk? Dat lijkt me toegevoegde waarde.
+    label: nieuwsgierig
+  - text: Haha een race to zero. Om tegen 2050 geen fossiele CO2 meer in de lucht te pompen moeten we vanaf morgen elke dag tot die tijd een kern centrale in bedrijf nemen. Voor de tegenstanders van kernenergie kunnen het ook 1500 windmolens zijn. Op die cijfers valt natuurlijk wel eea af te dingen bijvoorbeeld dat we energie efficiënter worden tot 2050, maar daartegenover staat weer dat ze in Afrika een stijgende energie honger hebben... Op naar 1 kerncentrale elke dag tot 2050 jongens! Wanneer beginnen we te bouwen?
+    label: grappig
+chapter4:
+  Welke van de vorige berichten zou jij uitlichten? Je mag er 1 kiezen.
+chapter5:
+  - text: Ik vind de conclusie van dit stuk wel goed. Het moet een en en en verhaal worden. Zonen energie, kernenergie, wind energie en waterstof. Dan hoef je niet het hele land vol te pompen met zonneparken en windmolens, maar heb je niet op iedere straathoek een kerncentrale of kernafval opslag. Kost een hoop, zeker weten. Maar dan ben je wel van gas, kolen en biomassa af.
+    botresult: 0.94
+  - text: Ik wil best met de trein op vakantie ipv het vliegtuig, maar laat de overheid en de Europese Unie er dan ook voor zorgen dat, dat aantrekkelijk is voor mensen. Het 4/5x zo duur en duurt 4/5x zo lang, waarom zou ik dan in godsnaam met de trein gaan.
+    botresult: 0.86
+  - text: Consumentengedrag aanpassen is zeker niet de enige weg. Veel belangrijker is dat de groei van de wereldbevolking gaat afnemen. Meer mensen betekent meer auto's, vliegtuigen, huizen, wegen fabrieken, enz. Rajiv uit India wil graag ook een auto en een koelkast. Wie zijn wij om hem dit de verbieden?
+    botresult: 0.75
+  - text: Interessant onderzoek en theorie. De aarde blijft wel bestaan, maar de mensheid loopt ook een risico op hele grote problemen. Klimaatverandering, biodiversiteit holt achteruit, ecosystemen verdwijnen, grondstoffen putten uit. En een toenemende wereldbevolking.
+    botresult: 0.73
+  - text: Kunnen we nu eindelijk aan de ijstijd beginnen? We hebben het nu al wel lang genoeg uitgesteld en het begint mij een beetje te heet onder de voeten te worden.
+    botresult: 0.65
+  - text: Weinig verrassend dat er wordt gesjoemeld met data en interpretatie van feitelijke gegevens. Wat mij wel verbaast is hoe makkelijk mensen zich in de maling laten nemen. Wetenschappers zijn gewoon net echte mensen met een mening en een politieke dan wel confessionele voorkeur dus de mening kan gekleurd zijn. Wiens brood men eet wiens woord men spreekt.
+    botresult: 0.67
+  - text: Veel succes als Nederland klein landje wat maar een druppel op een gigantische gloeiende plaat bij draagt. Denk je nu echt dat dit nog tegen te houden is? Koop vast een huisje aan de zee. Kan je dr nog even een paar jaar van genieten.
+    botresult: 0.91
+  - text: Vind dit weer echt vreselijk. Van mij hoeft het niet warmer dan 20 graden te worden. Maar ben bang dat dit helemaal de verkeerde kant op gaat. De winters zijn we al vergeten. Dat bestaat al niet meer. Dit is gewoon een natuur ramp!
+    botresult: 0.87
+  - text: Onderhand neem ik liever dat risico dan dat we de aarde zover opstoken dat er over de hele blauwe knikker niet of nauwelijks plekken voor mensen zijn om een beetje fatsoenlijk te kunnen overleven.
+    botresults: 0.11
+  - text: De wetenschap ziet het probleem. Nu nog de meerderheid van het 'volk'. En aan de reacties te zien blijkt dat het grootste probleem.
+    botresult: 0.05
+chapter7: 
+  Beat the bot!

@@ -1,8 +1,9 @@
 <template>
   <div class="user-config" :class="status">
     <div class="topbar" @click="open = !open">
-      <div class="flex">{{ user.name }}</div>
       <user-avatar :user="user"></user-avatar>
+      <div class="flex">{{ user.name }}</div>
+      <div>MENU</div>
     </div>
     <div class="menu" v-if="open">
       <div class="order">
@@ -68,6 +69,13 @@ onMounted(() => {
     flex: 1;
   }
 }
+
+.menu {
+  // position: fixed;
+  position: relative;
+  z-index: 999;
+  background: var(--bg);
+}
 .status {
   padding: 0em 0.5em;
   --fg: #222;
@@ -86,6 +94,7 @@ onMounted(() => {
 }
 .order {
   padding: 1em;
+  text-align: left;
   > div {
     opacity: 0.5;
     &.active {

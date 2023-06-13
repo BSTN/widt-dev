@@ -25,7 +25,8 @@ export const useUserStore = defineStore('userStore', {
     socket: undefined,
     creating: false,
     users: [],
-    answers: []
+    answers: [],
+    finished: []
   }),
   getters: {
     icon(state): String {
@@ -38,7 +39,7 @@ export const useUserStore = defineStore('userStore', {
       }
     },
     getAnswer(state) {
-      return ({ chapter, k }) => {
+      return ({ chapter, k }:{chapter:String, k: Number}) => {
         const found = state.answers.find(x => x.chapter === chapter && x.k === k)
         if (found === undefined) { return null }
         return found.answer
@@ -122,6 +123,18 @@ export const useUserStore = defineStore('userStore', {
         self.name = name
         self.saveToLocalStorage()
       })
+
+      Socket.on('setFinished', ({ userid, name, groupid }) => {
+        if (!self.finished.includes(name)) {
+          self.finished.push(name)
+        }
+      })
+
+      Socket.on('setUnFinished', ({ userid, name, groupid }) => {
+        if (self.finished.includes(name)) {
+          self.finished.splice(self.finished.indexOf(name), 1)
+        }
+      })
       
       this.loading = false
 
@@ -137,6 +150,22 @@ export const useUserStore = defineStore('userStore', {
     test() {
       const Socket = useSocket()
       Socket.emit('test')
+    },
+    finish(name: String) {
+      if (!this.finished.includes(name)) {
+        // add to finished
+        this.finished.push(name)
+      }
+      // send to server
+      const Socket = useSocket()
+      Socket.emit('finish', {userid: this.userid, groupid: this.groupid, name: name})
+    },
+    unFinish(name: String) {
+      if (this.finished.includes(name)) {
+        this.finished.splice(this.finished.indexOf(name), 1)  
+      }
+      const Socket = useSocket()
+      Socket.emit('unFinish', { userid: this.userid, groupid: this.groupid, name: name })
     },
     async setAnswer({ chapter, k, answer }) {
       const key = this.answers.findIndex(x => x.chapter === chapter && x.k === k)

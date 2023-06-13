@@ -23,7 +23,8 @@ export interface UserState {
   socket?: Socket<ServerToClientEvents, ClientToServerEvents>,
   creating: Boolean,
   users: Array<userData>
-  answers: Array<answer>
+  answers: Array<answer>,
+  finished: Array<String>
 }
 
 interface ServerToClientEvents {

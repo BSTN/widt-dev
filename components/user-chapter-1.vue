@@ -25,6 +25,13 @@
         </button>
       </div>
     </div>
+    <div class="done">
+      {{ user.finished }}
+      <button class="contrast" @click="user.finish('chapter1')">Klaar?</button>
+      <button class="contrast" @click="user.unFinish('chapter1')">
+        Niet klaar!
+      </button>
+    </div>
   </div>
 </template>
 <script lang="ts" setup>

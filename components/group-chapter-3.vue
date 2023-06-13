@@ -1,12 +1,10 @@
 <template>
-  <div class="group-chapter-1">
-    <finished name="chapter1"></finished>
-  </div>
+  <div class="group-chapter-3">group chapter 3</div>
 </template>
 <script lang="ts" setup>
 const group = useGroupStore();
 </script>
 <style lang="less" scoped>
-.group-chapter-1 {
+.group-chapter-3 {
 }
 </style>
