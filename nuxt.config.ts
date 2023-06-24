@@ -2,6 +2,7 @@
 
 import ViteYaml from '@modyfi/vite-plugin-yaml';
 import ViteMarkdown from 'vite-plugin-markdown';
+import svgLoader from 'vite-svg-loader'
 
 export default defineNuxtConfig({
   content: {
@@ -28,6 +29,7 @@ export default defineNuxtConfig({
   vite: {
     plugins: [
       ViteYaml(),
+      svgLoader(),
       ViteMarkdown({mode: ['html']})
     ]
   },

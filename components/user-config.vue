@@ -3,7 +3,10 @@
     <div class="topbar" @click="open = !open">
       <user-avatar :user="user"></user-avatar>
       <div class="flex">{{ user.name }}</div>
-      <div>MENU</div>
+      <div class="burger">
+        <icon icon="menu" v-if="!open"></icon>
+        <icon icon="cross" v-if="open"></icon>
+      </div>
     </div>
     <div class="menu" v-if="open">
       <div class="order">
@@ -63,7 +66,7 @@ onMounted(() => {
   background: var(--bg);
   cursor: pointer;
   > div {
-    padding: 0.5em;
+    padding: 0.5em 0.25em;
   }
   .flex {
     flex: 1;
@@ -96,9 +99,13 @@ onMounted(() => {
   padding: 1em;
   text-align: left;
   > div {
-    opacity: 0.5;
+    border-top: 1px solid var(--bg2);
+    color: var(--fg2);
+    &:last-child {
+      border-bottom: 1px solid var(--bg2);
+    }
     &.active {
-      opacity: 1;
+      color: var(--fg);
     }
   }
 }

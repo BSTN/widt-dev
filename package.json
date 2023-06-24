@@ -2,7 +2,8 @@
   "private": true,
   "scripts": {
     "build": "nuxt build",
-    "dev": "docker compose up -d && docker attach widt-frontend",
+    "dev": "nuxt dev --port 2223",
+    "devold": "docker compose up -d && docker attach widt-frontend",
     "stop": "docker compose down",
     "open:frontend": "docker attach widt-frontend",
     "open:backend": "docker attach widt-backend",
@@ -32,6 +33,7 @@
     "socket.io": "^4.6.1",
     "socket.io-client": "^4.6.1",
     "uuid": "^9.0.0",
-    "vite-plugin-markdown": "^2.1.0"
+    "vite-plugin-markdown": "^2.1.0",
+    "vite-svg-loader": "^4.0.0"
   }
 }
