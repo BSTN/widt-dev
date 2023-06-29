@@ -1,7 +1,0 @@
----
-title: video
-description: video
-layout: group-layout
----
-
-:videoPlayer{file=videos/test.mp4}

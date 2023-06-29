@@ -13,6 +13,7 @@
       <button @click="toggleMute()" class="contrast">
         <icon :icon="muted ? 'muted' : 'unmuted'"></icon>
       </button>
+      <button @click="$emit('next')">volgende</button>
     </div>
   </div>
 </template>

@@ -24,7 +24,8 @@ export interface UserState {
   creating: Boolean,
   users: Array<userData>
   answers: Array<answer>,
-  finished: Array<String>
+  finished: Array<String>,
+  started: Array<String>
 }
 
 interface ServerToClientEvents {

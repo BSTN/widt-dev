@@ -3,15 +3,6 @@
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev --port 2223",
-    "devold": "docker compose up -d && docker attach widt-frontend",
-    "stop": "docker compose down",
-    "open:frontend": "docker attach widt-frontend",
-    "open:backend": "docker attach widt-backend",
-    "open:socket": "docker attach widt-socket",
-    "edit:frontend": "docker exec -it widt-frontend sh",
-    "edit:backend": "docker exec -it widt-backend sh",
-    "edit:socket": "docker exec -it widt-socket sh",
-    "dockerdev": "nuxt dev --port 2223",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
@@ -24,6 +15,7 @@
     "@modyfi/vite-plugin-yaml": "^1.0.4",
     "@pinia/nuxt": "^0.4.7",
     "@types/uuid": "^9.0.1",
+    "@vueform/slider": "^2.1.7",
     "@vueuse/core": "^9.13.0",
     "fantasy-name-generator": "^2.0.0",
     "less": "^4.1.3",

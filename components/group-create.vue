@@ -53,7 +53,7 @@ const url = computed(() => {
   font-size: 1rem;
 }
 .imgcontainer {
-  background: var(--fg);
+  background: #fff;
   border-radius: 100%;
   border-radius: 1rem;
   width: 20rem;

@@ -5,7 +5,7 @@
       <textarea v-model="input"></textarea>
     </div>
     <div class="buttons">
-      <button @click="send()">klaar</button>
+      <button @click="send()">verstuur</button>
     </div>
   </div>
 </template>

@@ -2,9 +2,9 @@
   <div class="group-start">
     <group-create></group-create>
     <div class="instructions">
-      Doe mee door de camera van je telefoon op dit onderstaande plaatje te
-      richten en klik vervolgens op de link op je scherm. Je kan vervolgens ook
-      de link delen in bijvoorbeeld een (groep) chat via
+      Doe mee door de camera van je telefoon op het plaatje te
+      richten en klik vervolgens op de link op je scherm. Je kan
+      de link ook delen in bijvoorbeeld een (groep) chat via
       WhatsApp/Signal/Telegram.
     </div>
     <allUsers type="small"></allUsers>

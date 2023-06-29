@@ -112,6 +112,13 @@ label {
   margin-bottom: .5em;
 }
 
+h1 {
+  font-size: 4rem;
+  // font-family: 'ARK-ES';
+  line-height: 1em;
+  margin: 1em;
+}
+
 
 .icon {
   color:var(--fg2);
@@ -168,8 +175,8 @@ label {
 }
 
 .commentbox {
-  background: var(--fg);
-  color: var(--bg);
+  background: var(--cbg);
+  color: var(--cfg);
   position: relative;
   padding: 0.7em 1em;
   margin-bottom: 1em;
@@ -186,6 +193,23 @@ label {
     width: 0.5rem;
     height: 0.5rem;
     clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 0%);
-    background: var(--fg);
+    background: var(--cbg);
+  }
+}
+
+.done {
+  width: 100%;
+  background: var(--bg);
+  padding:0;
+  button {
+    width: 100%;
+    padding: 3rem 1rem;
+    margin: 0;
+    background: transparent;
+    color: var(--fg);
+    &:hover {
+      color: var(--fg);
+      background: var(--bg2);
+    }
   }
 }

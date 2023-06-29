@@ -5,14 +5,10 @@ import ViteMarkdown from 'vite-plugin-markdown';
 import svgLoader from 'vite-svg-loader'
 
 export default defineNuxtConfig({
-  content: {
-    documentDriven: true,
-  },
   css: [
     '@/less/elements.less'
   ],
   modules: [
-    '@nuxt/content',
     ['@pinia/nuxt', {
       '@/stores/labelstore': ['useLabelStore']
     }]
@@ -27,6 +23,13 @@ export default defineNuxtConfig({
     }
   },
   vite: {
+    css: {
+      preprocessorOptions: {
+        less: {
+          additionalData: `@import "@/less/ease.less";@import "@/less/animations.less";`
+        }
+      }
+    },
     plugins: [
       ViteYaml(),
       svgLoader(),

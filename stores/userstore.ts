@@ -26,7 +26,8 @@ export const useUserStore = defineStore('userStore', {
     creating: false,
     users: [],
     answers: [],
-    finished: []
+    finished: [],
+    started: []
   }),
   getters: {
     icon(state): String {
@@ -83,6 +84,7 @@ export const useUserStore = defineStore('userStore', {
 
       // connection status
       Socket.on('connect', function () {
+        console.log('%c Socket connected.', 'color:yellow;')
         // join the room
         if (self.groupid !== '' && self.userid !== '') {
           Socket.emit('joinRoom', {
@@ -90,24 +92,29 @@ export const useUserStore = defineStore('userStore', {
             userid: self.userid
           })
         }
+        Socket.emit('getGroupData', {groupid: self.groupid})
         self.connected = true
       });
       Socket.on('disconnect', function () { self.connected = false });
 
       Socket.on('groupUserData', (data) => {
-        console.log(data)
-        // const newdata = data.map(x => {
-        //   return {
-        //     id: x.id,
-        //     name: x.name
-        //   }
-        // })
         this.users = data
+      })
+
+      Socket.on('loadGroupData', (data) => {
+        this.started = data.started
+        for (let i in data.finished) {
+          if (data.finished[i].includes(this.userid)) {
+            if (!self.finished.includes(i)) { self.finished.push(i) }
+          }
+        }
       })
 
       // message from socketmaster
       Socket.on("goto", (position) => {
-        console.log('goto', position, order[position].user)
+        // console.log('goto', position, order[position].user)
+        const router = useRouter()
+        router.push('/deelnemer/' + order[position].user)
         self.position = position
         // navigateTo(order[position].user)
       });
@@ -122,6 +129,18 @@ export const useUserStore = defineStore('userStore', {
         self.userid = userid
         self.name = name
         self.saveToLocalStorage()
+      })
+
+      Socket.on('setStartChapter', ({ userid, name, groupid }) => {
+        if (!self.started.includes(name)) {
+          self.started.push(name)
+        }
+      })
+
+      Socket.on('setUnStartChapter', ({ userid, name, groupid }) => {
+        if (self.started.includes(name)) {
+          self.started.splice(self.started.indexOf(name), 1)
+        }
       })
 
       Socket.on('setFinished', ({ userid, name, groupid }) => {

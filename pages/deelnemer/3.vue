@@ -19,11 +19,9 @@
         </button>
       </div>
     </div>
-    <div class="done">
-      {{ user.finished }}
-      <button class="contrast" @click="user.finish('chapter2')">Klaar?</button>
-      <button class="contrast" @click="user.unFinish('chapter2')">
-        Niet klaar!
+    <div class="done" v-if="!finished">
+      <button class="contrast" @click="user.finish('chapter3')">
+        Klik hier als je klaar bent!
       </button>
     </div>
   </div>
@@ -33,6 +31,9 @@ import { storeToRefs } from "pinia";
 const user = useUserStore();
 import questions from "@/content/questions.yml";
 const { getAnswer } = storeToRefs(user);
+const finished = computed(() =>
+  user.finished ? user.finished.includes("chapter3") : false
+);
 </script>
 <style lang="less" scoped>
 .user-chapter-3 {
@@ -49,13 +50,15 @@ const { getAnswer } = storeToRefs(user);
     width: 100%;
     // margin: 0 0 0.5em auto;
     color: var(--fg2);
+    background: var(--bg);
+    border-color: var(--bg2);
     &:hover {
-      color: var(--bg);
+      color: var(--fg);
     }
   }
 }
 button.active {
-  background: var(--fg);
-  color: var(--bg);
+  background: var(--gbg);
+  color: var(--gfg);
 }
 </style>

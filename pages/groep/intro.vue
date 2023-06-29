@@ -1,12 +1,12 @@
 <template>
-  <div class="group-chapter-1">
-    <finished name="chapter1"></finished>
+  <div class="group-intro">
+    <VideoPlayer file="/videos/test.mp4" @next="group.next()"></VideoPlayer>
   </div>
 </template>
 <script lang="ts" setup>
 const group = useGroupStore();
 </script>
 <style lang="less" scoped>
-.group-chapter-1 {
+.group-intro {
 }
 </style>

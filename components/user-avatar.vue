@@ -45,4 +45,15 @@ const { user } = defineProps({
   overflow: hidden;
   padding: 0.25em 0;
 }
+.user-avatar.small {
+  width: 2rem;
+  margin: 0;
+  padding: 0;
+  .icon {
+    width: 2rem;
+  }
+  .name {
+    display: none;
+  }
+}
 </style>

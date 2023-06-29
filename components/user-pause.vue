@@ -1,6 +1,7 @@
 <template>
   <div class="user-pause">
-    <loader></loader>
+    <!-- <loader></loader> -->
+    <logoSpinner></logoSpinner>
     <div class="center">[Kijk naar het grote scherm]</div>
   </div>
 </template>
@@ -8,7 +9,7 @@
 <style lang="less" scoped>
 .user-pause {
   width: 100%;
-  height: 80vh;
+  height: 90vh;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -17,5 +18,6 @@
 }
 .center {
   align-self: center;
+  margin: 1em auto;
 }
 </style>

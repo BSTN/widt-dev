@@ -2,7 +2,7 @@
 <svg width="200px" height="200px" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <title>cross</title>
     <g id="cross" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <rect id="Rectangle" fill="#000000" transform="translate(99.500000, 99.943709) rotate(-315.000000) translate(-99.500000, -99.943709) " x="-1" y="84.6357616" width="201" height="30.615894" rx="5"></rect>
-        <rect id="Rectangle-Copy-2" fill="#000000" transform="translate(99.500000, 100.056291) rotate(-45.000000) translate(-99.500000, -100.056291) " x="-1" y="84.7483444" width="201" height="30.615894" rx="5"></rect>
+        <rect id="Rectangle" fill="#000000" transform="translate(99.5, 99.9437) rotate(-315) translate(-99.5, -99.9437)" x="-1" y="84.6357616" width="201" height="30.615894" rx="5"></rect>
+        <rect id="Rectangle-Copy-2" fill="#000000" transform="translate(99.5, 100.0563) rotate(-45) translate(-99.5, -100.0563)" x="-1" y="84.7483444" width="201" height="30.615894" rx="5"></rect>
     </g>
 </svg>

@@ -1,11 +1,9 @@
 <template>
   <div class="group-config" :class="status">
-    <button @click="group.prev()">PREV</button>
+    <!-- <button @click="group.prev()">PREV</button>
     {{ group.position }}
-    <button @click="group.next()">NEXT</button>
-    <div class="status">
-      <div class="loading" v-if="group.loading">loading...</div>
-    </div>
+    <button @click="group.next()">NEXT</button> -->
+    <div class="status"></div>
     <!-- <button class="reset" @click="group.reset()">reset</button> -->
   </div>
 </template>

@@ -11,10 +11,12 @@ export const useGroupStore = defineStore('groupStore', {
     position: 0,
     users: [],
     mounted: false,
-    finished: {}
+    finished: {},
+    started: []
   }),
   actions: {
     async init() {
+      console.log('init group store')
       this.mounted = true
       // composable injection
       const { choose } = useNotify()
@@ -34,13 +36,19 @@ export const useGroupStore = defineStore('groupStore', {
           this.groupid = group.groupid
         } else {
           // start over
-          router.push("/group")
+          this.position = 0;
+          this.users = []
+          this.finished = {}
+          this.started = []
           // create group id
           this.groupid = uuid();
         }
       } else {
         // start over
-        router.push("/group")
+        this.position = 0;
+        this.users = []
+        this.finished = {}
+        this.started = []
         // create group id
         this.groupid = uuid();
       }
@@ -54,6 +62,8 @@ export const useGroupStore = defineStore('groupStore', {
         Socket.emit('joinRoom', { groupid: self.groupid })
         // retrieve all user data
         Socket.emit('getAllUserData', { groupid: self.groupid })
+        // retrieve all user data
+        Socket.emit('getGroupData', { groupid: self.groupid })
       });
       // notifications:
       Socket.on('error', function () {
@@ -76,6 +86,8 @@ export const useGroupStore = defineStore('groupStore', {
       })
       // goto url
       Socket.on('goto', (position) => {
+        const router = useRouter()
+        router.push('/groep/' + order[position].group)
         self.position = position
       })
 
@@ -88,6 +100,23 @@ export const useGroupStore = defineStore('groupStore', {
       Socket.on('groupUserData', (data) => {
         this.users = data
       })
+      // receive groupData
+      Socket.on('loadGroupData', (data) => {
+        if (data.finished) { this.finished = data.finished }
+        if (data.started) { this.started = data.started }
+      })
+
+      Socket.on('setStartChapter', ({ userid, name, groupid }) => {
+        if (!self.started.includes(name)) {
+          self.started.push(name)
+        }
+      })
+
+      Socket.on('setUnStartChapter', ({ userid, name, groupid }) => {
+        if (self.started.includes(name)) {
+          self.started.splice(self.started.indexOf(name), 1)
+        }
+      })
 
       Socket.on('setFinished', ({ userid, name, groupid }) => {
         if (!(name in self.finished)) { self.finished[name] = [userid] }
@@ -98,6 +127,15 @@ export const useGroupStore = defineStore('groupStore', {
         if (!(name in self.finished)) { self.finished[name] = [] }
         if (self.finished[name].includes(userid)) { self.finished[name].splice(self.finished[name].indexOf(userid), 1) }
       })
+
+      Socket.on('updateAnswer', ({ userid, chapter, k, answer }) => {
+        const user = self.users.find(x => x.userid === userid)
+        if (user) {
+          if (!user.answers) { user.answers = {} }
+          if (!user.answers[chapter]) { user.answers[chapter] = [] }
+          user.answers[chapter][k] = answer
+        }
+      })
       
       // do something?
       Socket.on('disconnect', function() { self.connected = false });
@@ -107,6 +145,14 @@ export const useGroupStore = defineStore('groupStore', {
       this.saveToLocalStorage()
       
     },
+    startChapter (name: String) {
+      const Socket = useSocket()
+      Socket.emit('startChapter', {groupid: this.groupid, name})
+    },
+    unStartChapter (name: String) {
+      const Socket = useSocket()
+      Socket.emit('unStartChapter', {groupid: this.groupid, name})
+    },
     reset() {
       this.groupid = uuid();
       this.saveToLocalStorage()
@@ -115,9 +161,9 @@ export const useGroupStore = defineStore('groupStore', {
       const Socket = useSocket()
       Socket.emit('prev', { groupid: this.groupid})
     },
-    next() {
+    next(position?:Number) {
       const Socket = useSocket()
-      Socket.emit('next', { groupid: this.groupid }, () => {
+      Socket.emit('next', { groupid: this.groupid, position }, () => {
         console.log('callback!')
       })
     },

@@ -1,31 +1,24 @@
 - name: Start
-  group: group-start
-  user: user-start
+  group: 
+  user: 1
 - name: Introductie
-  group: video-player
-  file: 'videos/test.mp4'
-  user: user-pause
-- name: Introductie 1.
-  group: group-intro-1
-  user: user-pause
+  group: intro
+  user: 1
 - name: "1. Goed en Kwaad"
-  group: group-chapter-1
-  user: user-chapter-1
-- name: "1. Goed en Kwaad resultaten"
-  group: group-chapter-1
-  user: user-chapter-1-results
-- name: "Introductie 2."
-  group: group-intro-1
-  user: user-pause
+  group: 1
+  user: 1
 - name: "2. Trollen vangen"
-  group: group-chapter-2
-  user: user-chapter-2
+  group: 2
+  user: 2
 - name: "3. Labels"
-  group: group-chapter-3
-  user: user-chapter-3
+  group: 3
+  user: 3
 - name: "4. Pin"
-  group: group-chapter-4
-  user: user-chapter-4
-- name: "5. Beat-the-bot!"
-  group: group-chapter-5
-  user: user-chapter-5
+  group: 4
+  user: 4
+- name: "5. Battle-the-bot!"
+  group: 5
+  user: 5
+- name: "6. Beat-the-bot!"
+  group: 6
+  user: 6

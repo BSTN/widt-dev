@@ -1,6 +1,0 @@
----
-title: Start
-next: /
----
-
-:groupMain
