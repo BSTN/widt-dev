@@ -42,6 +42,8 @@ export const useGroupStore = defineStore('groupStore', {
           this.started = []
           // create group id
           this.groupid = uuid();
+          const router = useRouter()
+          router.push('/')
         }
       } else {
         // start over
@@ -87,8 +89,10 @@ export const useGroupStore = defineStore('groupStore', {
       // goto url
       Socket.on('goto', (position) => {
         const router = useRouter()
-        router.push('/groep/' + order[position].group)
-        self.position = position
+        if (order[position].group !== null) {
+          router.push('/groep/' + order[position].group)
+          self.position = position
+        }
       })
 
       // addUser
@@ -136,6 +140,10 @@ export const useGroupStore = defineStore('groupStore', {
           user.answers[chapter][k] = answer
         }
       })
+
+      Socket.on('grouptest', (data) => {
+        console.log('grouptest', data)
+      })
       
       // do something?
       Socket.on('disconnect', function() { self.connected = false });
@@ -164,7 +172,7 @@ export const useGroupStore = defineStore('groupStore', {
     next(position?:Number) {
       const Socket = useSocket()
       Socket.emit('next', { groupid: this.groupid, position }, () => {
-        console.log('callback!')
+        // console.log('callback!')
       })
     },
     test () {

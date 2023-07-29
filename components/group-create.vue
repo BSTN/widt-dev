@@ -36,10 +36,11 @@ function copy() {
   navigator.clipboard.writeText(url.value);
 }
 const url = computed(() => {
-  const url = window.location.href.replace(
-    "/group",
-    "/test?id=" + group.groupid
-  );
+  const str = window.location.href;
+  const url =
+    (str.endsWith("/") ? str.slice(0, -1) : str) +
+    "/deelnemer/start?id=" +
+    group.groupid;
   QRCode.toDataURL(url, function (err, code) {
     if (err) return console.log("error occurred");
     qrcodeimg.value = code;
@@ -58,7 +59,7 @@ const url = computed(() => {
   border-radius: 1rem;
   width: 20rem;
   height: 20rem;
-  margin: 0 auto 1rem;
+  margin: 0 auto 0;
   overflow: hidden;
   position: relative;
 }

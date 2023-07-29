@@ -2,7 +2,9 @@
   <div class="all-users" :class="'type-' + type">
     <div v-if="users">
       <label
-        >{{ users.length }} deelnemer{{ users.length > 1 ? "s" : "" }}</label
+        >{{ users.length }} deelnemer{{
+          users.length > 1 || users.length === 0 ? "s" : ""
+        }}</label
       >
       <userAvatar v-for="user in users" :user="user" />
     </div>

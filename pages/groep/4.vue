@@ -1,7 +1,7 @@
 <template>
   <div class="group-chapter-4" v-if="!group.loading">
     <h1>4. Berichten vastpinnen</h1>
-    <ChapterProgress chapter="chapter3" v-if="!results"></ChapterProgress>
+    <ChapterProgress chapter="chapter4" v-if="!results"></ChapterProgress>
     <videoPlayer
       file="/videos/test.mp4"
       v-if="!started"

@@ -1,22 +1,25 @@
 <template>
   <div class="user-chapter-3">
-    <div class="question">
-      Welk label bij de volgende reacties vind je het beste van toepassing?
-    </div>
-    <div v-for="(q, k) in questions.chapter3" class="commentscontainer">
-      <div class="commentbox">
-        {{ q.text }}
+    <userPause v-if="!started || finished"></userPause>
+    <div class="" v-if="!finished">
+      <div class="question">
+        Welk label bij de volgende reacties vind je het beste van toepassing?
       </div>
-      <div class="options">
-        <button
-          v-for="label in questions['chapter3-labels']"
-          @click="user.setAnswer({ chapter: 'chapter3', k, answer: label })"
-          :class="{
-            active: getAnswer({ chapter: 'chapter3', k }) === label,
-          }"
-        >
-          {{ label }}
-        </button>
+      <div v-for="(q, k) in questions.chapter3" class="commentscontainer">
+        <div class="commentbox">
+          {{ q.text }}
+        </div>
+        <div class="options">
+          <button
+            v-for="label in questions['chapter3-labels']"
+            @click="user.setAnswer({ chapter: 'chapter3', k, answer: label })"
+            :class="{
+              active: getAnswer({ chapter: 'chapter3', k }) === label,
+            }"
+          >
+            {{ label }}
+          </button>
+        </div>
       </div>
     </div>
     <div class="done" v-if="!finished">
@@ -31,6 +34,9 @@ import { storeToRefs } from "pinia";
 const user = useUserStore();
 import questions from "@/content/questions.yml";
 const { getAnswer } = storeToRefs(user);
+const started = computed(() =>
+  user.started ? user.started.includes("chapter3") : false
+);
 const finished = computed(() =>
   user.finished ? user.finished.includes("chapter3") : false
 );

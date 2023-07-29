@@ -8,7 +8,7 @@
         <icon icon="cross" v-if="open"></icon>
       </div>
     </div>
-    <div class="menu" v-if="open">
+    <div class="menu" v-if="open && user.userid">
       <div class="order">
         <div
           class="position"
@@ -22,6 +22,10 @@
       <button class="reset" @click="user.reset()" v-if="user.userid !== ''">
         verlaat het spel
       </button>
+    </div>
+    <div class="loggedoutmenu" v-if="open && !user.userid">
+      Bezoek <a href="https://wie-is-de-trol.nl"> wie-is-de-trol.nl</a> voor
+      meer informatie.
     </div>
   </div>
 </template>
@@ -78,6 +82,12 @@ onMounted(() => {
   position: relative;
   z-index: 999;
   background: var(--bg);
+}
+
+.loggedoutmenu {
+  position: relative;
+  background: var(--bg);
+  padding: 2rem;
 }
 .status {
   padding: 0em 0.5em;

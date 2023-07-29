@@ -101,6 +101,10 @@ export const useUserStore = defineStore('userStore', {
         this.users = data
       })
 
+      Socket.on('addUser', (data) => {
+        console.log('Add User!', data)
+      })
+
       Socket.on('loadGroupData', (data) => {
         this.started = data.started
         for (let i in data.finished) {
@@ -113,6 +117,7 @@ export const useUserStore = defineStore('userStore', {
       // message from socketmaster
       Socket.on("goto", (position) => {
         // console.log('goto', position, order[position].user)
+        console.log('goto', position)
         const router = useRouter()
         router.push('/deelnemer/' + order[position].user)
         self.position = position
@@ -155,6 +160,10 @@ export const useUserStore = defineStore('userStore', {
         }
       })
       
+      Socket.on('grouptest', (data) => {
+        console.log('grouptest', data)
+      })
+
       this.loading = false
 
       this.saveToLocalStorage()
@@ -186,7 +195,7 @@ export const useUserStore = defineStore('userStore', {
       const Socket = useSocket()
       Socket.emit('unFinish', { userid: this.userid, groupid: this.groupid, name: name })
     },
-    async setAnswer({ chapter, k, answer }) {
+    async setAnswer({ chapter, k, answer }:{chapter:String, k:Number, answer:any}) {
       const key = this.answers.findIndex(x => x.chapter === chapter && x.k === k)
       if (key === -1) {
         this.answers.push({chapter, k, answer})
@@ -203,13 +212,14 @@ export const useUserStore = defineStore('userStore', {
       const { confirm } = useNotify()
       const sure = await confirm('Weet je zeker dat je het spel wilt verlaten?')
       if (sure) {
-        const Socket = useSocket()
         const done = await asyncEmit('removeUser', { groupid: this.groupid, userid: this.userid })
         if (done) {
           this.userid = '';
           this.name = '';
           this.answers = [];
           this.saveToLocalStorage()
+          const router = useRouter()
+          router.push('/') // to landing page?
         }
       }
     },

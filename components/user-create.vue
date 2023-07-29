@@ -7,7 +7,7 @@
         <div>Even wachten tot iedereen zover is...</div>
       </div>
     </div>
-    <div class="centered" v-if="!user.userid">
+    <div class="" v-if="!user.userid">
       <div class="avatar">
         <div class="icon" v-html="icon" @click="generate()"></div>
         <div class="naam">{{ naam }}</div>
@@ -61,6 +61,7 @@ onMounted(() => {
   width: 16rem;
   max-width: 100%;
   margin: 0 auto;
+  user-select: none;
   :deep(.mainuser.user-avatar .icon) {
     animation: heartbeat 0.8s linear 0.5s infinite forwards;
     // animation: rotate 2s linear 0.5s infinite forwards;
@@ -87,7 +88,7 @@ onMounted(() => {
 }
 
 .avatar {
-  background: var(--bg2);
+  background: var(--bg);
   border-radius: 0.5em;
   margin-bottom: 1em;
   padding: 2em;

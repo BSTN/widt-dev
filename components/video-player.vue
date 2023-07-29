@@ -10,9 +10,9 @@
       <button @click="togglePlay()" class="contrast">
         <icon :icon="playing ? 'pause' : 'play'"></icon>
       </button>
-      <button @click="toggleMute()" class="contrast">
+      <!-- <button @click="toggleMute()" class="contrast">
         <icon :icon="muted ? 'muted' : 'unmuted'"></icon>
-      </button>
+      </button> -->
       <button @click="$emit('next')">volgende</button>
     </div>
   </div>

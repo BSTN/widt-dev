@@ -1,6 +1,10 @@
 import { io } from "socket.io-client";
+let started = false
 
 export const useSocket = () => {
   const config = useRuntimeConfig()
-  return io(config.public.URL + config.public.BASE)
+  if (!started) {
+    started = io(config.public.URL + config.public.BASE)
+  }
+  return started
 }

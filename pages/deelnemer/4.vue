@@ -1,8 +1,9 @@
 <template>
   <div class="user-chapter-4">
-    <div class="questions" v-if="finished">
+    <userPause v-if="!started || finished"></userPause>
+    <div class="questions" v-if="!finished">
       <div class="question">
-        Welk label bij de volgende reacties vind je het beste van toepassing?
+        Welke van de vorige berichten zou jij uitlichten? Je mag er 1 kiezen.
       </div>
       <div v-for="(q, k) in questions.chapter3" class="commentscontainer">
         <div class="commentbox">
@@ -22,6 +23,9 @@ import { storeToRefs } from "pinia";
 const user = useUserStore();
 import questions from "@/content/questions.yml";
 const { getAnswer } = storeToRefs(user);
+const started = computed(() =>
+  user.started ? user.started.includes("chapter4") : false
+);
 const finished = computed(() =>
   user.finished ? user.finished.includes("chapter4") : false
 );

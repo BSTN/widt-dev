@@ -20,7 +20,7 @@ const { user } = defineProps({
   padding: 1em;
   color: var(--fg2);
   width: 10em;
-  background: var(--bg2);
+  background: var(--bg);
   margin: 0.5em;
   border-radius: 1em;
   transition: all 0.3s @easeInOutExpo;
@@ -29,7 +29,7 @@ const { user } = defineProps({
   }
 }
 .icon {
-  background: var(--bg2);
+  background: var(--bg);
   border-radius: 0.5em;
   width: 6em;
   margin: 0 auto;
