@@ -30,7 +30,7 @@ const group = useGroupStore();
   min-height: 100vh;
 }
 .logo {
-  width: 10rem;
+  width: 5rem;
   margin-bottom: 1rem;
 }
 .split {

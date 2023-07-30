@@ -1,15 +1,16 @@
 <template>
   <div class="user-chapter-5">
-    <div class="questions">
+    <userPause v-if="!started || finished"></userPause>
+    <div class="questions" v-if="!finished">
       <div class="q" v-for="(q, k) in questions.chapter5">
         <div class="commentbox">{{ q.text }}</div>
-        <botSlider
-          :data="getAnswer({ chapter: 'chapter5', k }) || 0"
-          :number="k"
-          @change="update"
-        ></botSlider>
-        value[{{ k }}]: {{ getAnswer({ chapter: "chapter5", k }) }}
+        <botSlider :number="k" chapter="chapter5" @change="update"></botSlider>
       </div>
+    </div>
+    <div class="done" v-if="!finished">
+      <button class="contrast" @click="user.finish('chapter5')">
+        Klik hier als je klaar bent!
+      </button>
     </div>
   </div>
 </template>
@@ -21,9 +22,14 @@ const value = 0;
 const { getAnswer } = storeToRefs(user);
 
 function update({ data, k }) {
-  console.log(k);
   user.setAnswer({ chapter: "chapter5", k, answer: data });
 }
+const started = computed(() =>
+  user.started ? user.started.includes("chapter5") : false
+);
+const finished = computed(() =>
+  user.finished ? user.finished.includes("chapter5") : false
+);
 </script>
 <style lang="less" scoped>
 .user-chapter-5 {

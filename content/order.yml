@@ -22,3 +22,6 @@
 - name: "6. Beat-the-bot!"
   group: 6
   user: 6
+- name: "Lees meer"
+  group: 7
+  user: 7

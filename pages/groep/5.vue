@@ -12,8 +12,11 @@
     </button>
     <div class="results" v-if="results">
       <div class="comments">
-        <div class="q commentbox" v-for="q in questions.chapter5">
-          {{ q.text }}
+        <div class="q" v-for="(q, k) in questions.chapter5">
+          <div class="commentbox">{{ q.text }}</div>
+          <div class="user" v-for="user in group.users">
+            {{ user.name }}: {{ user.answers["chapter5"][k] || "--" }}
+          </div>
         </div>
       </div>
       <div class="next">
@@ -32,9 +35,13 @@ const started = computed(() => group.started.includes("chapter5"));
 .group-chapter-5 {
 }
 .comments {
-  width: 40rem;
+  // width: 40rem;
   max-width: 100%;
   margin: 2rem auto;
   text-align: left;
+  display: grid;
+  gap: 2rem;
+  padding: 0rem 4rem;
+  grid-template-columns: repeat(3, 1fr);
 }
 </style>

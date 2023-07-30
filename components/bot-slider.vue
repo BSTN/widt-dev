@@ -1,8 +1,8 @@
 <template>
   <div class="bot-slider">
     <div class="labels">
-      <label>niet-constructief</label>
-      <label>constructief</label>
+      <label>← niet-constructief</label>
+      <label>constructief →</label>
     </div>
     <div class="frame">
       <!-- {{ val }} -->
@@ -17,15 +17,16 @@
         :lazy="false"
       ></Slider>
     </div>
-    val:{{ val }}, data:{{ data }}
-    <button @click="val = Math.random()">click</button>
-    <!-- {{ value }} -->
   </div>
 </template>
 <script lang="ts" setup>
+import { storeToRefs } from "pinia";
+const user = useUserStore();
+
 import Slider from "@vueform/slider";
-const { number, data } = defineProps(["data", "number"]);
+const { number, data, chapter } = defineProps(["data", "number", "chapter"]);
 const emit = defineEmits(["change"]);
+const { getAnswer } = storeToRefs(user);
 
 watch(
   () => data,
@@ -37,7 +38,7 @@ watch(
 
 const val = computed({
   get() {
-    return data;
+    return user.getAnswer({ chapter, k: number }) || 0;
   },
   set(val) {
     emit("change", { data: val, k: number });
@@ -54,14 +55,20 @@ const val = computed({
     flex: 1;
     opacity: 0.5;
     font-size: 0.6rem;
+    &:nth-child(2) {
+      text-align: right;
+    }
   }
 }
 .frame {
   position: relative;
+  margin-bottom: 2rem;
 }
 .theslider {
   background: var(--bg2);
   border-radius: 0.25em;
+  --slider-bg: var(--bg2);
+  --slider-connect-bg: var(--fg);
   :deep(.slider-origin) {
     // right: 0;
     // left: auto;

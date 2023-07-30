@@ -65,12 +65,20 @@ onMounted(() => {
 .topbar {
   // border-bottom: 1px solid var(--fg);
   display: flex;
-  padding: 0 0.25em;
+  padding: 0 0.5em;
   text-align: left;
   background: var(--bg);
   cursor: pointer;
+  align-items: center;
+  > * {
+    // outline: 1px solid #ccc;
+    border-radius: 0;
+  }
   > div {
     padding: 0.5em 0.25em;
+  }
+  > .burger {
+    margin-right: 0.5rem;
   }
   .flex {
     flex: 1;
@@ -97,7 +105,9 @@ onMounted(() => {
   text-transform: uppercase;
   font-size: 0.6rem;
   border: 1px solid var(--fg);
-  display: inline-block;
+  display: block;
+  width: 12rem;
+  margin: 0 auto 0em;
   .connected & {
     background: #a5de93;
   }
