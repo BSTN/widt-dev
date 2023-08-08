@@ -1,13 +1,14 @@
 <template>
   <div class="start">
     <div class="instructions" v-if="!user.userid">
+      <h1>Welkom bij Wie is de trol?!</h1>
       <p>
         Hieronder zie je je gegenereerde gebruikersnaam en icoon, zo kan je
         jezelf en je resultaten herkennen gedurende het spel.
       </p>
       <p>
-        Tip: Je kan een andere genereren door op het icoontje met naam te
-        klikken.
+        Tip: Je kan (nu nog) een andere naam en icoon genereren door op het
+        icoontje te klikken.
       </p>
     </div>
     <UserCreate></UserCreate>
@@ -22,9 +23,9 @@ const user = useUserStore();
   min-height: 100vh;
 }
 .instructions {
-  text-align: left;
+  text-align: center;
   padding: 1rem 1rem;
-  width: 30rem;
+  // width: 30rem;
   max-width: 100%;
   margin: 0 auto;
   :deep(p) {

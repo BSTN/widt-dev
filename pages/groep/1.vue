@@ -1,12 +1,13 @@
 <template>
   <div class="group-chapter-1">
-    <h1>1. Goed en Kwaad.</h1>
+    <h1>1. Eerste online discussie</h1>
     <!-- <button @click="group.startChapter('chapter1')">START</button>
     <button @click="group.unStartChapter('chapter1')">unSTART</button> -->
     <videoPlayer
-      file="/videos/test.mp4"
-      v-if="!started"
+      file="/videos/1.mp4"
+      :class="{ started }"
       @next="group.startChapter('chapter1')"
+      @restart="group.unStartChapter('chapter1')"
     ></videoPlayer>
     <!-- <finished name="chapter1"></finished> -->
     <ChapterProgress chapter="chapter1" v-if="!results"></ChapterProgress>

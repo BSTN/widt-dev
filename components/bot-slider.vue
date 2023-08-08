@@ -46,7 +46,6 @@ const val = computed({
 });
 </script>
 <style lang="less" scoped>
-// @import "@/node_modules/@vueform/slider/themes/default.css";
 .bot-slider {
 }
 .labels {

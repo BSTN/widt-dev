@@ -2,14 +2,18 @@
   <div class="group-chapter-6">
     <h1>6. Beat-the-bot!</h1>
     <videoPlayer
-      file="/videos/test.mp4"
-      v-if="!started"
+      file="/videos/6.mp4"
+      :class="{ started }"
       @next="group.startChapter('chapter6')"
+      @restart="group.unStartChapter('chapter6')"
     ></videoPlayer>
     <ChapterProgress chapter="chapter6" v-if="!results"></ChapterProgress>
     <button @click="results = true" v-if="!results">
       vergelijk resultaten
     </button>
+    <div class="next">
+      <button @click="group.next()">volgende hoofdstuk</button>
+    </div>
   </div>
 </template>
 <script lang="ts" setup>

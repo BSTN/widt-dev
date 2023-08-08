@@ -43,6 +43,8 @@ function done(user) {
   width: 20rem;
   max-width: 100%;
   margin: 0 auto;
+  border-radius: 0.25em;
+  background: var(--bg2);
   padding: 1rem;
   .user {
     display: flex;

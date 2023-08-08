@@ -3,19 +3,21 @@
     <h1>5. Battle-the-bot!</h1>
     <ChapterProgress chapter="chapter5" v-if="!results"></ChapterProgress>
     <videoPlayer
-      file="/videos/test.mp4"
-      v-if="!started"
+      file="/videos/5.mp4"
+      :class="{ started }"
       @next="group.startChapter('chapter5')"
+      @restart="group.unStartChapter('chapter5')"
     ></videoPlayer>
     <button @click="results = true" v-if="!results">
       vergelijk resultaten
     </button>
     <div class="results" v-if="results">
-      <div class="comments">
+      <div class="comments" v-if="questions.chapter5">
         <div class="q" v-for="(q, k) in questions.chapter5">
           <div class="commentbox">{{ q.text }}</div>
           <div class="user" v-for="user in group.users">
-            {{ user.name }}: {{ user.answers["chapter5"][k] || "--" }}
+            {{ user.name }}:
+            {{ user.answers["chapter5"] ? user.answers["chapter5"][k] : "--" }}
           </div>
         </div>
       </div>

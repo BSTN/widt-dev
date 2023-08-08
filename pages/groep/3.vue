@@ -2,9 +2,10 @@
   <div class="group-chapter-3" v-if="!group.loading">
     <h1 @click="group.unStartChapter('chapter3')">3. Labels</h1>
     <videoPlayer
-      file="/videos/test.mp4"
-      v-if="!started"
+      file="/videos/3.mp4"
+      :class="{ started }"
       @next="group.startChapter('chapter3')"
+      @restart="group.unStartChapter('chapter3')"
     ></videoPlayer>
     <ChapterProgress chapter="chapter3" v-if="!results"></ChapterProgress>
     <button @click="results = true" v-if="!results">
