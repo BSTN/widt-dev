@@ -190,6 +190,8 @@ function stopDragging() {
   width: 100%;
   min-height: 100vh;
   transition: all 0.5s;
+  background: var(--bg);
+  border-radius: 0.25rem;
   .videoframe {
     position: relative;
     width: 60rem;
@@ -220,11 +222,13 @@ function stopDragging() {
     background: #222;
     position: relative;
     border-radius: 1rem;
+    width: 100%;
   }
   &.started {
     width: 8rem;
     min-height: auto;
-    padding: 0.5rem;
+    padding: 0.25rem;
+    margin: 0.5rem;
     .restart {
       position: absolute;
       top: 0;

@@ -38,17 +38,18 @@ function done(user) {
 </script>
 <style lang="less" scoped>
 .chapter-progress {
+  margin-bottom: 2rem;
 }
 .users {
   width: 20rem;
   max-width: 100%;
   margin: 0 auto;
   border-radius: 0.25em;
-  background: var(--bg2);
+  background: var(--bg);
   padding: 1rem;
   .user {
     display: flex;
-    background: var(--bg2);
+    background: var(--bg);
     border-radius: 0.25em;
     margin-bottom: 2px;
     align-items: center;

@@ -1,6 +1,7 @@
 <template>
   <div class="group-chapter-4" v-if="!group.loading">
-    <h1>4. Berichten uitlichten</h1>
+    <chapterlogo class="chapterlogo"></chapterlogo>
+    <h1>Een ‘goede’ discussie</h1>
     <ChapterProgress chapter="chapter4" v-if="!results"></ChapterProgress>
     <videoPlayer
       file="/videos/4.mp4"
@@ -24,6 +25,7 @@
   </div>
 </template>
 <script lang="ts" setup>
+import chapterlogo from "@/assets/chapters/4.svg?component";
 import questions from "@/content/questions.yml";
 const group = useGroupStore();
 const results = ref(false);

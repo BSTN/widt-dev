@@ -1,6 +1,7 @@
 <template>
   <div class="group-chapter-2">
-    <h1 @click="group.unStartChapter('chapter2')">2. Trollen vangen</h1>
+    <chapterlogo class="chapterlogo"></chapterlogo>
+    <h1>Trollen vangen</h1>
     <videoPlayer
       file="/videos/2.mp4"
       :class="{ started }"
@@ -28,6 +29,7 @@
   </div>
 </template>
 <script lang="ts" setup>
+import chapterlogo from "@/assets/chapters/2.svg?component";
 import questions from "@/content/questions.yml";
 const group = useGroupStore();
 const results = ref(false);

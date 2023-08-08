@@ -1,6 +1,7 @@
 <template>
   <div class="group-chapter-1">
-    <h1>1. Eerste online discussie</h1>
+    <chapterlogo class="chapterlogo"></chapterlogo>
+    <h1>Eerste online discussie</h1>
     <!-- <button @click="group.startChapter('chapter1')">START</button>
     <button @click="group.unStartChapter('chapter1')">unSTART</button> -->
     <videoPlayer
@@ -31,6 +32,7 @@
   </div>
 </template>
 <script lang="ts" setup>
+import chapterlogo from "@/assets/chapters/1.svg?component";
 import questions from "@/content/questions.yml";
 const group = useGroupStore();
 const started = computed(() => group.started.includes("chapter1"));

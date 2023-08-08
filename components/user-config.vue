@@ -120,6 +120,7 @@ onMounted(() => {
   text-align: left;
   > div {
     border-top: 1px solid var(--bg2);
+    padding: 0.5em 0;
     color: var(--fg2);
     &:last-child {
       border-bottom: 1px solid var(--bg2);

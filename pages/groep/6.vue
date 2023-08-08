@@ -1,6 +1,7 @@
 <template>
-  <div class="group-chapter-6">
-    <h1>6. Beat-the-bot!</h1>
+  <div class="group-chapter-6" v-if="!group.loading">
+    <chapterlogo class="chapterlogo"></chapterlogo>
+    <h1>De gevaren van AI</h1>
     <videoPlayer
       file="/videos/6.mp4"
       :class="{ started }"
@@ -17,6 +18,7 @@
   </div>
 </template>
 <script lang="ts" setup>
+import chapterlogo from "@/assets/chapters/6.svg?component";
 const group = useGroupStore();
 const results = ref(false);
 const started = computed(() => group.started.includes("chapter6"));

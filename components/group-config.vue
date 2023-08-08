@@ -1,18 +1,16 @@
 <template>
   <div class="group-config" :class="status">
-    <!-- <button @click="group.prev()">PREV</button>
-    {{ group.position }}
-    <button @click="group.next()">NEXT</button> -->
     <div class="status"></div>
-    <!-- <button class="reset" @click="group.reset()">reset</button> -->
   </div>
 </template>
 <script lang="ts" setup>
 const group = useGroupStore();
 const status = ref("");
-onBeforeRouteLeave(() => {
-  alert("bye!");
+const route = useRoute();
+watch(route, (a, b, c) => {
+  console.log({ a, b, c });
 });
+
 watch(
   () => group.connected,
   () => {

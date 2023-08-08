@@ -51,17 +51,28 @@ const finished = computed(() =>
 <style lang="less" scoped>
 .user-chapter-2 {
   text-align: left;
+  background: var(--testbg);
+}
+.questions {
+  max-width: 30rem;
+  margin: 0 auto;
 }
 .item {
   padding: 1em;
-  border-bottom: 1px solid var(--fg);
   .name {
-    text-align: center;
+    text-align: left;
     margin-bottom: 0.5em;
     padding: 1em 0;
     .icon {
       display: inline-block;
       margin-right: 0.5em;
+      background: var(--bg);
+      width: 4rem;
+      height: 4rem;
+      border: 1rem solid var(--bg);
+      border-radius: 100%;
+      vertical-align: middle;
+      margin-right: 1em;
     }
   }
 }
