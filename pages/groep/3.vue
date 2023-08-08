@@ -14,11 +14,21 @@
     </button>
     <div class="results" v-if="results">
       <div class="q" v-for="(q, k) in questions['chapter3']">
-        {{ q.text }}
+        <div class="commentbox">
+          {{ q.text }}
+        </div>
+        <div class="answers">
+          <div
+            v-for="(users, label) in labelCountPerComment[k]"
+            v-show="users.length > 0"
+          >
+            {{ label }} <sup>{{ users.length }}</sup>
+          </div>
+        </div>
       </div>
-      <div class="next">
-        <button @click="group.next()">volgende hoofdstuk</button>
-      </div>
+    </div>
+    <div class="next" v-if="results">
+      <button @click="group.next()">volgende hoofdstuk</button>
     </div>
   </div>
 </template>
@@ -28,23 +38,57 @@ import questions from "@/content/questions.yml";
 const group = useGroupStore();
 const results = ref(false);
 const started = computed(() => group.started.includes("chapter3"));
+
+const labelCountPerComment = computed(() => {
+  return questions["chapter3"].map((x, k) => {
+    const values = {};
+    const labels = questions["chapter3-labels"];
+    labels.map((label) => {
+      values[label] = [];
+    });
+    for (let u in group.users) {
+      if (
+        group.users[u].answers["chapter3"] &&
+        group.users[u].answers["chapter3"][k]
+      ) {
+        values[group.users[u].answers["chapter3"][k]].push({
+          userid: group.users[u].userid,
+          name: group.users[u].name,
+        });
+      }
+    }
+    return values;
+  });
+});
 </script>
 <style lang="less" scoped>
 .group-chapter-3 {
 }
 
 .results {
-  width: 20rem;
+  // width: 20rem;
   margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2rem;
+  padding: 2rem;
 }
 .q {
-  display: flex;
+  // display: flex;
   margin: 0 auto 1em;
   width: 100%;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  text-align: left;
   .name {
     flex: 1;
     text-align: left;
   }
+}
+
+sup {
+  vertical-align: super;
+  font-size: 0.7rem;
 }
 
 .circle {

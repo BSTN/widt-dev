@@ -9,11 +9,14 @@
       @restart="group.unStartChapter('chapter6')"
     ></videoPlayer>
     <ChapterProgress chapter="chapter6" v-if="!results"></ChapterProgress>
+    <div class="results" v-if="results">
+      Hier komen alle reacties, gesorteerd op score.
+    </div>
     <button @click="results = true" v-if="!results">
       vergelijk resultaten
     </button>
     <div class="next">
-      <button @click="group.next()">volgende hoofdstuk</button>
+      <button @click="group.next()">naar het einde</button>
     </div>
   </div>
 </template>

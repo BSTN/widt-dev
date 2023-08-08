@@ -1,9 +1,9 @@
 <template>
   <div class="user-chapter-3">
     <userPause v-if="!started || finished"></userPause>
-    <div class="" v-if="!finished">
+    <div class="questions" v-if="!finished">
       <div class="question">
-        Welk label bij de volgende reacties vind je het beste van toepassing?
+        Welk label vind je het beste van toepassing bij de volgende reacties?
       </div>
       <div v-for="(q, k) in questions.chapter3" class="commentscontainer">
         <div class="commentbox">
@@ -45,15 +45,23 @@ const finished = computed(() =>
 .user-chapter-3 {
 }
 
+.questions {
+  max-width: 100%;
+  width: 40rem;
+  margin: 0 auto;
+}
+
 .commentscontainer {
   text-align: left;
   padding: 1rem;
 }
 
 .options {
+  text-align: right;
+  font-size: 0.8rem;
   button {
-    display: block;
-    width: 100%;
+    display: inline-block;
+    // width: 100%;
     // margin: 0 0 0.5em auto;
     color: var(--fg2);
     background: var(--bg);
@@ -66,5 +74,9 @@ const finished = computed(() =>
 button.active {
   background: var(--gbg);
   color: var(--gfg);
+  border-color: var(--gbg);
+  &:hover {
+    color: var(--bg);
+  }
 }
 </style>

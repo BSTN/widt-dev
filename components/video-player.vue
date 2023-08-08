@@ -1,5 +1,5 @@
 <template>
-  <div class="video">
+  <div class="video" :class="{ started }">
     <div class="videoframe">
       <button @click="$emit('next')">
         <icon icon="cross" alt="close"></icon>
@@ -47,6 +47,8 @@
 </template>
 <script lang="ts" setup>
 import Slider from "@vueform/slider";
+// for loading
+const started = ref(true);
 
 const group = useGroupStore();
 const { file } = defineProps({
@@ -121,6 +123,9 @@ onMounted(() => {
   showControl();
 
   window.requestAnimationFrame(refreshFrame);
+  setTimeout(() => {
+    started.value = false;
+  }, 10);
 });
 
 let donotupdate = false;
@@ -192,6 +197,7 @@ function stopDragging() {
   transition: all 0.5s;
   background: var(--bg);
   border-radius: 0.25rem;
+  z-index: 9;
   .videoframe {
     position: relative;
     width: 60rem;

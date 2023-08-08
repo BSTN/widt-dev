@@ -4,7 +4,10 @@
       <div class="user" v-for="user in group.users">
         <UserAvatar class="small" :user="user"></UserAvatar>
         <div class="name">{{ user.name }}</div>
-        <div class="progress">
+        <div
+          class="progress"
+          v-if="chapter !== 'chapter4' && chapter !== 'chapter6'"
+        >
           {{
             user.answers && user.answers[chapter]
               ? user.answers[chapter].length
@@ -29,6 +32,9 @@ const { chapter } = defineProps({
   },
 });
 function done(user) {
+  if (chapter === "chapter4") {
+    return user.answers && user.answers[chapter] && user.answers[chapter][0];
+  }
   return (
     user.answers &&
     user.answers[chapter] &&

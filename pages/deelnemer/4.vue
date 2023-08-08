@@ -5,7 +5,12 @@
       <div class="question">
         Welke van de vorige berichten zou jij uitlichten? Je mag er 1 kiezen.
       </div>
-      <div v-for="(q, k) in questions.chapter3" class="commentscontainer">
+      <div
+        v-for="(q, k) in questions.chapter3"
+        class="commentscontainer"
+        @click="user.setAnswer({ chapter: 'chapter4', k: 0, answer: k })"
+        :class="{ active: getAnswer({ chapter: 'chapter4', k: 0 }) === k }"
+      >
         <div class="commentbox">
           {{ q.text }}
         </div>
@@ -32,28 +37,21 @@ const finished = computed(() =>
 </script>
 <style lang="less" scoped>
 .user-chapter-4 {
+  background: var(--testbg);
 }
 
 .commentscontainer {
   text-align: left;
   padding: 1rem;
-}
-
-.options {
-  button {
-    display: block;
-    width: 100%;
-    // margin: 0 0 0.5em auto;
-    color: var(--fg2);
-    background: var(--bg);
-    border-color: var(--bg2);
-    &:hover {
-      color: var(--fg);
+  cursor: pointer;
+  &.active {
+    .commentbox {
+      background: var(--gfg);
+      color: var(--gbg);
+      &:before {
+        background: var(--gfg);
+      }
     }
   }
-}
-button.active {
-  background: var(--gbg);
-  color: var(--gfg);
 }
 </style>

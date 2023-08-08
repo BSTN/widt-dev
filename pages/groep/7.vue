@@ -1,5 +1,6 @@
 <template>
-  <div class="group-7" v-if="!group.loading">
+  <div class="group-chapter-7" v-if="!group.loading">
+    <div>.</div>
     <h1>Over en uit.</h1>
     <div class="text">
       <p>Bedankt voor met meedoen met <i>Wie is de trol?</i>!</p>
