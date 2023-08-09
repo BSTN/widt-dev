@@ -1,7 +1,10 @@
 <template>
   <div class="group-chapter-4" v-if="!group.loading">
     <chapterlogo class="chapterlogo"></chapterlogo>
-    <h1>Een ‘goede’ discussie</h1>
+    <h1>Constructiviteit</h1>
+    <div class="subtitlequestion">
+      Welke reacties voegen volgens jou iets toe aan de discussie?
+    </div>
     <ChapterProgress chapter="chapter4" v-if="!results"></ChapterProgress>
     <videoPlayer
       file="/videos/4.mp4"

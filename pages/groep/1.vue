@@ -1,7 +1,10 @@
 <template>
   <div class="group-chapter-1">
     <chapterlogo class="chapterlogo"></chapterlogo>
-    <h1>Eerste online discussie</h1>
+    <h1>Goed en Kwaad.</h1>
+    <div class="subtitlequestion">
+      Welke reacties vind jij toelaatbaar en welke niet?
+    </div>
     <!-- <button @click="group.startChapter('chapter1')">START</button>
     <button @click="group.unStartChapter('chapter1')">unSTART</button> -->
     <videoPlayer

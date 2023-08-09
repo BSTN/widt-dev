@@ -2,6 +2,9 @@
   <div class="group-chapter-2">
     <chapterlogo class="chapterlogo"></chapterlogo>
     <h1>Trollen vangen</h1>
+    <div class="subtitlequestion">
+      Welke accounts vertonen volgens jou trolgedrag?
+    </div>
     <videoPlayer
       file="/videos/2.mp4"
       :class="{ started }"

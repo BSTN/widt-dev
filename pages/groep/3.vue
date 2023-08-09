@@ -1,7 +1,11 @@
 <template>
   <div class="group-chapter-3" v-if="!group.loading">
     <chapterlogo class="chapterlogo"></chapterlogo>
-    <h1>Nieuwe oplossingen</h1>
+    <h1>Labelen</h1>
+    <div class="subtitlequestion">
+      Deelnemers aan online platforms hebben verschillende intenties. Kun jij
+      per reactie aangeven wat je denkt dat de bedoeling is van de schrijver?
+    </div>
     <videoPlayer
       file="/videos/3.mp4"
       :class="{ started }"

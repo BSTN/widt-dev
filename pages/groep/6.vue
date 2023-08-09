@@ -1,7 +1,12 @@
 <template>
   <div class="group-chapter-6" v-if="!group.loading">
     <chapterlogo class="chapterlogo"></chapterlogo>
-    <h1>De gevaren van AI</h1>
+    <h1>Beat the bot</h1>
+    <div class="subtitlequestion">
+      Schrijf de meest constructieve bijdrage die je kunt bedenken. De bot
+      plaatst alle reacties uit de klas straks in een hiërarchie van hoog naar
+      laag.
+    </div>
     <videoPlayer
       file="/videos/6.mp4"
       :class="{ started }"
