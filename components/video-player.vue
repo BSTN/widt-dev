@@ -1,10 +1,15 @@
 <template>
   <div class="video" :class="{ started }">
     <div class="videoframe">
-      <button @click="$emit('next')">
+      <button
+        @click="
+          stop();
+          $emit('next');
+        "
+      >
         <icon icon="cross" alt="close"></icon>
       </button>
-      <video noloop @click="toggleMute()" ref="video">
+      <video noloop ref="video">
         <source :src="file" type="video/mp4" />
       </video>
     </div>
@@ -26,7 +31,7 @@
         ></Slider>
       </div>
       <div class="subcontrol">
-        <div class="start" @click="startPlay()">Start vanaf het begin</div>
+        <div class="start" @click="startPlay()">Begin opnieuw</div>
         <div class="timecode">
           <span>{{ timecode }}</span>
           <span>{{ duration }}</span>
@@ -51,8 +56,9 @@ import Slider from "@vueform/slider";
 const started = ref(true);
 
 const group = useGroupStore();
-const { file } = defineProps({
+const { file, initStarted } = defineProps({
   file: { type: String, default: () => "videos/test.mp4" },
+  initStarted: { type: Boolean, default: () => true },
 });
 const val = ref(0);
 const emit = defineEmits(["next", "restart"]);
@@ -76,6 +82,12 @@ function togglePlay() {
     }
   }
 }
+
+function stop() {
+  if (video.value) {
+    video.value.pause();
+  }
+}
 function startPlay() {
   if (video.value) {
     video.value.pause();
@@ -93,6 +105,11 @@ function showControl() {
     showController.value = false;
   }, 700);
 }
+onBeforeMount(() => {
+  if (initStarted === false) {
+    started.value = false;
+  }
+});
 onMounted(() => {
   if (video.value) {
     video.value.addEventListener("play", () => {

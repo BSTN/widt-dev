@@ -13,12 +13,7 @@
         <div class="naam">{{ naam }}</div>
       </div>
       <div>
-        <button
-          @click="user.createUser({ name: naam, userid })"
-          class="contrast"
-        >
-          start
-        </button>
+        <button @click="user.createUser({ name: naam, userid })">start</button>
       </div>
     </div>
   </div>

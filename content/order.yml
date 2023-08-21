@@ -1,9 +1,6 @@
 - name: Start
   group: 
   user: 1
-- name: Introductie
-  group: intro
-  user: 1
 - name: "1. Goed en Kwaad"
   group: 1
   user: 1

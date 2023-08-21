@@ -22,6 +22,10 @@ const user = useUserStore();
   background: var(--testbg);
   min-height: 100vh;
 }
+
+h1 {
+  font-size: 2rem;
+}
 .instructions {
   text-align: center;
   padding: 1rem 1rem;
